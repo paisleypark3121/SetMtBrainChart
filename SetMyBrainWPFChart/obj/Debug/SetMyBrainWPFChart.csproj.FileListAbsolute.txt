@@ -7,11 +7,9 @@ C:\SetMyBrain\SetMyBrainChart\SetMyBrainWPFChart\bin\Debug\LiveCharts.pdb
 C:\SetMyBrain\SetMyBrainChart\SetMyBrainWPFChart\bin\Debug\LiveCharts.xml
 C:\SetMyBrain\SetMyBrainChart\SetMyBrainWPFChart\bin\Debug\LiveCharts.Wpf.pdb
 C:\SetMyBrain\SetMyBrainChart\SetMyBrainWPFChart\bin\Debug\LiveCharts.Wpf.xml
-C:\SetMyBrain\SetMyBrainChart\SetMyBrainWPFChart\obj\Debug\MainWindow.g.cs
 C:\SetMyBrain\SetMyBrainChart\SetMyBrainWPFChart\obj\Debug\App.g.cs
 C:\SetMyBrain\SetMyBrainChart\SetMyBrainWPFChart\obj\Debug\SetMyBrainWPFChart_MarkupCompile.cache
 C:\SetMyBrain\SetMyBrainChart\SetMyBrainWPFChart\obj\Debug\SetMyBrainWPFChart_MarkupCompile.lref
-C:\SetMyBrain\SetMyBrainChart\SetMyBrainWPFChart\obj\Debug\MainWindow.baml
 C:\SetMyBrain\SetMyBrainChart\SetMyBrainWPFChart\obj\Debug\SetMyBrainWPFChart.g.resources
 C:\SetMyBrain\SetMyBrainChart\SetMyBrainWPFChart\obj\Debug\SetMyBrainWPFChart.Properties.Resources.resources
 C:\SetMyBrain\SetMyBrainChart\SetMyBrainWPFChart\obj\Debug\SetMyBrainWPFChart.csproj.GenerateResource.cache
@@ -22,4 +20,6 @@ C:\SetMyBrain\SetMyBrainChart\SetMyBrainWPFChart\obj\Debug\SetMyBrainWPFChart.pd
 C:\SetMyBrain\SetMyBrainChart\SetMyBrainWPFChart\obj\Debug\BasicChartUserControl.g.cs
 C:\SetMyBrain\SetMyBrainChart\SetMyBrainWPFChart\obj\Debug\BasicChartUserControl.baml
 C:\SetMyBrain\SetMyBrainChart\SetMyBrainWPFChart\obj\Debug\GeneratedInternalTypeHelper.g.cs
+C:\SetMyBrain\SetMyBrainChart\SetMyBrainWPFChart\obj\Debug\MainWindow.g.cs
+C:\SetMyBrain\SetMyBrainChart\SetMyBrainWPFChart\obj\Debug\MainWindow.baml
 C:\SetMyBrain\SetMyBrainChart\SetMyBrainWPFChart\obj\Debug\SetMyBrainWPFChart.csprojAssemblyReference.cache

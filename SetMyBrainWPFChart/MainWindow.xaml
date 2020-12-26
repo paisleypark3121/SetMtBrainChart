@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SetMyBrainWPFChart"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="SetMyBrain" Height="450" Width="800">
     <Grid>
         <local:BasicChartUserControl Margin="11,8,21.333,3.667" RenderTransformOrigin="0.5,0.5">
             <local:BasicChartUserControl.RenderTransform>

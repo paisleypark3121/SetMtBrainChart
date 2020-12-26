@@ -6,6 +6,9 @@
              xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
              mc:Ignorable="d" 
              d:DesignHeight="454.286" d:DesignWidth="772.408">
+    <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="bvc"></BooleanToVisibilityConverter>
+    </UserControl.Resources>
     <Grid>
         <!--<lvc:CartesianChart Series="{Binding Series}">
             <lvc:CartesianChart.AxisX>
@@ -14,26 +17,39 @@
         </lvc:CartesianChart>-->
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
         <Button Grid.Row="0" Click="InjectStopOnClick">
             Inject/Stop Data
         </Button>
+        <StackPanel Grid.Row="1" Orientation="Horizontal">
+            <CheckBox IsChecked="{Binding Alpha1SeriesVisibility}">
+                Alpha1
+            </CheckBox>
+            <CheckBox IsChecked="{Binding Alpha2SeriesVisibility}">
+                Alpha2
+            </CheckBox>
+        </StackPanel>
         <!--Here we disable tooltips and hovering to get a better performance-->
-        <lvc:CartesianChart Grid.Row="1" AnimationsSpeed="0:0:0.5" Hoverable="False" DataTooltip="{x:Null}">
+        <lvc:CartesianChart Grid.Row="2" AnimationsSpeed="0:0:0.5" Hoverable="False" DataTooltip="{x:Null}" LegendLocation="Right">
             <lvc:CartesianChart.Series>
                 <lvc:LineSeries Values="{Binding ChartValuesAlpha1}" 
+                                Title="Apha1"
                                 PointGeometry="{x:Null}" 
                                 LineSmoothness="1"
-                                StrokeThickness="6" 
+                                StrokeThickness="3" 
                                 Stroke="#F34336"
-                                Fill="Transparent"/>
+                                Fill="Transparent"
+                                Visibility="{Binding Alpha1SeriesVisibility, Converter={StaticResource bvc}}" />
                 <lvc:LineSeries Values="{Binding ChartValuesAlpha2}" 
+                                Title="Apha2"
                                 PointGeometry="{x:Null}" 
                                 LineSmoothness="1"
-                                StrokeThickness="6" 
+                                StrokeThickness="3" 
                                 Stroke="Indigo"
-                                Fill="Transparent"/>
+                                Fill="Transparent"
+                                Visibility="{Binding Alpha2SeriesVisibility, Converter={StaticResource bvc}}" />
             </lvc:CartesianChart.Series>
             <lvc:CartesianChart.AxisX>
                 <lvc:Axis LabelFormatter="{Binding DateTimeFormatter}" 

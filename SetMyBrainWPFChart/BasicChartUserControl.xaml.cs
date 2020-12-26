@@ -27,51 +27,62 @@ namespace SetMyBrainWPFChart
     {
         private double _axisMax;
         private double _axisMin;
-        private float _trend;
         private static Random random = new Random();
+        public ChartValues<DateChartModel> ChartValuesAlpha1 { get; set; }
+        public ChartValues<DateChartModel> ChartValuesAlpha2 { get; set; }
+
+        private bool _alpha1SeriesVisibility;
+        private bool _alpha2SeriesVisibility;
+        public Func<double, string> DateTimeFormatter { get; set; }
+        public double AxisStep { get; set; }
+        public double AxisUnit { get; set; }
+
 
         public BasicChartUserControl()
         {
             InitializeComponent();
 
             var mapper = Mappers.Xy<DateChartModel>()
-                .X(model => model.DateTime.Ticks)   //use DateTime.Ticks as X
-                .Y(model => model.Value);           //use the value property as Y
+                .X(model => model.DateTime.Ticks)
+                .Y(model => model.Value);
 
-            //lets save the mapper globally.
             Charting.For<DateChartModel>(mapper);
 
-            //the values property will store our values array
-            //ChartValues = new ChartValues<DateChartModel>();
             ChartValuesAlpha1 = new ChartValues<DateChartModel>();
             ChartValuesAlpha2 = new ChartValues<DateChartModel>();
-
-            //lets set how to display the X Labels
+            
             DateTimeFormatter = value => new DateTime((long)value).ToString("mm:ss");
 
-            //AxisStep forces the distance between each separator in the X axis
             AxisStep = TimeSpan.FromSeconds(1).Ticks;
-            //AxisUnit forces lets the axis know that we are plotting seconds
-            //this is not always necessary, but it can prevent wrong labeling
             AxisUnit = TimeSpan.TicksPerSecond;
 
             SetAxisLimits(DateTime.Now);
 
-            //The next code simulates data changes every 300 ms
-
             IsReading = false;
+            _alpha1SeriesVisibility = true;
+            _alpha2SeriesVisibility = true;
 
             DataContext = this;
         }
 
-
-        //public ChartValues<DateChartModel> ChartValues { get; set; }
-        public ChartValues<DateChartModel> ChartValuesAlpha1 { get; set; }
-        public ChartValues<DateChartModel> ChartValuesAlpha2 { get; set; }
-
-        public Func<double, string> DateTimeFormatter { get; set; }
-        public double AxisStep { get; set; }
-        public double AxisUnit { get; set; }
+        public bool Alpha1SeriesVisibility
+        {
+            get { return _alpha1SeriesVisibility; }
+            set
+            {
+                _alpha1SeriesVisibility = value;
+                OnPropertyChanged("Alpha1SeriesVisibility");
+            }
+        }
+        public bool Alpha2SeriesVisibility
+        {
+            get { return _alpha2SeriesVisibility; }
+            set
+            {
+                _alpha2SeriesVisibility = value;
+                OnPropertyChanged("Alpha2SeriesVisibility");
+            }
+        }
 
         public double AxisMax
         {
@@ -96,22 +107,13 @@ namespace SetMyBrainWPFChart
 
         private void Read()
         {
-            //var r = new Random();
-
             while (IsReading)
             {
                 Thread.Sleep(150);
                 var now = DateTime.Now;
 
-                //_trend += r.Next(-8, 10);
                 float alpha1 = random.Next(1, 20);
                 float alpha2 = random.Next(1, 20);
-
-                //ChartValues.Add(new DateChartModel
-                //{
-                //    DateTime = now,
-                //    Value = _trend
-                //});
 
                 ChartValuesAlpha1.Add(new DateChartModel
                 {
@@ -126,8 +128,6 @@ namespace SetMyBrainWPFChart
                 });
 
                 SetAxisLimits(now);
-
-                //lets only use the last 150 values
                 if (ChartValuesAlpha1.Count > 150)
                     ChartValuesAlpha1.RemoveAt(0);
                 if (ChartValuesAlpha2.Count > 150)
@@ -137,8 +137,8 @@ namespace SetMyBrainWPFChart
 
         private void SetAxisLimits(DateTime now)
         {
-            AxisMax = now.Ticks + TimeSpan.FromSeconds(1).Ticks; // lets force the axis to be 1 second ahead
-            AxisMin = now.Ticks - TimeSpan.FromSeconds(8).Ticks; // and 8 seconds behind
+            AxisMax = now.Ticks + TimeSpan.FromSeconds(1).Ticks;
+            AxisMin = now.Ticks - TimeSpan.FromSeconds(8).Ticks;
         }
 
         private void InjectStopOnClick(object sender, RoutedEventArgs e)
