@@ -7,16 +7,16 @@
         mc:Ignorable="d"
         Title="SetMyBrain" Height="450" Width="800">
     <Grid>
-        <local:BasicChartUserControl Margin="11,8,21.333,3.667" RenderTransformOrigin="0.5,0.5">
-            <local:BasicChartUserControl.RenderTransform>
+        <local:NeuroskyUserControl Margin="11,8,21.333,3.667" RenderTransformOrigin="0.5,0.5">
+            <local:NeuroskyUserControl.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform/>
                     <SkewTransform/>
                     <RotateTransform Angle="0.025"/>
                     <TranslateTransform/>
                 </TransformGroup>
-            </local:BasicChartUserControl.RenderTransform>
-        </local:BasicChartUserControl>
+            </local:NeuroskyUserControl.RenderTransform>
+        </local:NeuroskyUserControl>
 
     </Grid>
 </Window>

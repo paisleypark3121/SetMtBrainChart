@@ -7,6 +7,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SetMyBrainChart", "SetMyBra
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SetMyBrainWPFChart", "SetMyBrainWPFChart\SetMyBrainWPFChart.csproj", "{88DE68BA-F027-4C00-B90B-6B9E3447AB53}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppSettings", "..\AppSettings\AppSettings\AppSettings.csproj", "{7EAD603D-C84A-4FF5-9D07-3D7C3DA3C016}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Connector", "..\Connector\Connector\Connector.csproj", "{A87836BD-111F-4297-831A-69E44BDD4F03}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +25,14 @@ Global
 		{88DE68BA-F027-4C00-B90B-6B9E3447AB53}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{88DE68BA-F027-4C00-B90B-6B9E3447AB53}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{88DE68BA-F027-4C00-B90B-6B9E3447AB53}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7EAD603D-C84A-4FF5-9D07-3D7C3DA3C016}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7EAD603D-C84A-4FF5-9D07-3D7C3DA3C016}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7EAD603D-C84A-4FF5-9D07-3D7C3DA3C016}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7EAD603D-C84A-4FF5-9D07-3D7C3DA3C016}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A87836BD-111F-4297-831A-69E44BDD4F03}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A87836BD-111F-4297-831A-69E44BDD4F03}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A87836BD-111F-4297-831A-69E44BDD4F03}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A87836BD-111F-4297-831A-69E44BDD4F03}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
