@@ -42,34 +42,63 @@ namespace SetMyBrainWPFChart
         #endregion
 
         #region axis
-        private double _axisMax;
-        private double _axisMin;
-        public double AxisStep { get; set; }
-        public double AxisUnit { get; set; }
-        public double AxisMax
+        private double _axisXMax;
+        private double _axisXMin;
+        public double AxisXStep { get; set; }
+        public double AxisXUnit { get; set; }
+        public double AxisXMax
         {
-            get { return _axisMax; }
+            get { return _axisXMax; }
             set
             {
-                _axisMax = value;
-                OnPropertyChanged("AxisMax");
+                _axisXMax = value;
+                OnPropertyChanged("AxisXMax");
             }
         }
-        public double AxisMin
+        public double AxisXMin
         {
-            get { return _axisMin; }
+            get { return _axisXMin; }
             set
             {
-                _axisMin = value;
-                OnPropertyChanged("AxisMin");
+                _axisXMin = value;
+                OnPropertyChanged("AxisXMin");
             }
         }
-        private void SetAxisLimits(DateTime now)
+        private void SetAxisXLimits(DateTime now)
         {
-            AxisMax = now.Ticks + TimeSpan.FromSeconds(1).Ticks;
-            AxisMin = now.Ticks - TimeSpan.FromSeconds(8).Ticks;
+            AxisXMax = now.Ticks + TimeSpan.FromSeconds(1).Ticks;
+            AxisXMin = now.Ticks - TimeSpan.FromSeconds(8).Ticks;
         }
         public Func<double, string> DateTimeFormatter { get; set; }
+
+        private double _axisYMax;
+        private double _axisYMin;
+
+        public double AxisYMax
+        {
+            get { return _axisYMax; }
+            set
+            {
+                _axisYMax = value;
+                OnPropertyChanged("AxisYMax");
+            }
+        }
+        public double AxisYMin
+        {
+            get { return _axisYMin; }
+            set
+            {
+                _axisYMin = value;
+                OnPropertyChanged("AxisYMin");
+            }
+        }
+
+        private void SetAxisYLimits(int min, int max)
+        {
+            AxisYMax = max;
+            AxisYMin = min;
+        }
+
         #endregion
 
         #region chartValues
@@ -257,10 +286,11 @@ namespace SetMyBrainWPFChart
 
             DateTimeFormatter = value => new DateTime((long)value).ToString("mm:ss");
 
-            AxisStep = TimeSpan.FromSeconds(1).Ticks;
-            AxisUnit = TimeSpan.TicksPerSecond;
+            AxisXStep = TimeSpan.FromSeconds(1).Ticks;
+            AxisXUnit = TimeSpan.TicksPerSecond;
 
-            SetAxisLimits(DateTime.Now);
+            SetAxisXLimits(DateTime.Now);
+            SetAxisYLimits(-1000,10000);
 
             IsReading = false;
             _alpha1SeriesVisibility = true;
@@ -285,7 +315,7 @@ namespace SetMyBrainWPFChart
 
         private void Read()
         {
-            #region structures
+            #region structure
             Dictionary<string, object> previous = null;
             float previous_b = 0;
 
@@ -839,7 +869,7 @@ namespace SetMyBrainWPFChart
                     #endregion
 
                     #region visibility limit
-                    SetAxisLimits(_datetime);
+                    SetAxisXLimits(_datetime);
                     if (ChartValuesAlpha1.Count > visibility_limit)
                         ChartValuesAlpha1.RemoveAt(0);
                     if (ChartValuesAlpha2.Count > visibility_limit)

@@ -5,18 +5,20 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SetMyBrainWPFChart"
         mc:Ignorable="d"
-        Title="SetMyBrain" Height="450" Width="800">
+        Title="SetMyBrain" Height="600" Width="1000">
     <Grid>
-        <local:NeuroskyUserControl Margin="11,8,21.333,3.667" RenderTransformOrigin="0.5,0.5">
-            <local:NeuroskyUserControl.RenderTransform>
-                <TransformGroup>
-                    <ScaleTransform/>
-                    <SkewTransform/>
-                    <RotateTransform Angle="0.025"/>
-                    <TranslateTransform/>
-                </TransformGroup>
-            </local:NeuroskyUserControl.RenderTransform>
-        </local:NeuroskyUserControl>
-
+    <Grid.RowDefinitions>
+        <RowDefinition Height="Auto"></RowDefinition>
+        <RowDefinition Height="*"></RowDefinition>
+    </Grid.RowDefinitions>    
+    <Button Grid.Row="0" Click="InjectStopOnClick">
+        Inject/Stop Data
+    </Button>
+    <local:NeuroskyFrequenciesUserControl 
+        Grid.Row="1" 
+        x:Name="NFUC"
+        HorizontalAlignment="Left" Margin="10,10,0,-19.333" 
+        VerticalAlignment="Top" Height="480" Width="499"/>
     </Grid>
 </Window>
+    

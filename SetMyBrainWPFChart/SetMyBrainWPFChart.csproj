@@ -80,15 +80,23 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="NeuroskyFrequenciesUserControl.xaml.cs">
+      <DependentUpon>NeuroskyFrequenciesUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SetMyBrainIndexes.cs" />
+    <Compile Include="NeuroskyFrequencies.cs" />
     <Compile Include="Neurosky\Utilities.cs" />
+    <Compile Include="SetMyBrainIndexes.xaml.cs">
+      <DependentUpon>SetMyBrainIndexes.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Statistics\Utilities.cs" />
+    <Page Include="NeuroskyFrequenciesUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="NeuroskyUserControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
-    </Page>
-    <Page Include="BasicChartUserControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -101,14 +109,15 @@
     <Compile Include="NeuroskyUserControl.xaml.cs">
       <DependentUpon>NeuroskyUserControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="BasicChartUserControl.xaml.cs">
-      <DependentUpon>BasicChartUserControl.xaml</DependentUpon>
-    </Compile>
     <Compile Include="DateChartModel.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="SetMyBrainIndexes.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="NeuroskyData.cs" />
