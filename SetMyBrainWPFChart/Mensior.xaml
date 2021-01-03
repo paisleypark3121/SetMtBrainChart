@@ -1,0 +1,25 @@
+﻿<UserControl x:Class="SetMyBrainWPFChart.Mensior"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:SetMyBrainWPFChart"
+             mc:Ignorable="d" d:DesignWidth="800" Height="170">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"></ColumnDefinition>
+            <ColumnDefinition Width="1*"></ColumnDefinition>
+            <ColumnDefinition Width="1*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <TextBlock Grid.Column="1"  
+                   HorizontalAlignment="Right" 
+                   TextWrapping="Wrap" 
+                   VerticalAlignment="Center"
+                   FontSize="26">
+            <Hyperlink NavigateUri="http://www.mensior.com">MENSIOR</Hyperlink>
+        </TextBlock>
+        <Image Grid.Column="2" Source="/img/ValueMyBrain.jpg" />        
+    </Grid>
+
+
+</UserControl>

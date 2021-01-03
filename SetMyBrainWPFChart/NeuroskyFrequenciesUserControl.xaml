@@ -41,7 +41,7 @@
                 Theta
             </CheckBox>
         </StackPanel>
-        <lvc:CartesianChart Grid.Row="2" AnimationsSpeed="0:0:0.5" Hoverable="False" DataTooltip="{x:Null}" LegendLocation="Right">
+        <lvc:CartesianChart Grid.Row="1" AnimationsSpeed="0:0:0.5" Hoverable="False" DataTooltip="{x:Null}" LegendLocation="Right">
             <lvc:CartesianChart.Series>
                 <lvc:LineSeries Values="{Binding ChartValuesAlpha1}" 
                                 Title="Apha1"

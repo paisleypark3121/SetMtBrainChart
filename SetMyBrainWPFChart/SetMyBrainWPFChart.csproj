@@ -80,16 +80,29 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Mensior.xaml.cs">
+      <DependentUpon>Mensior.xaml</DependentUpon>
+    </Compile>
     <Compile Include="NeuroskyFrequenciesUserControl.xaml.cs">
       <DependentUpon>NeuroskyFrequenciesUserControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Neurosky\Collector.cs" />
+    <Compile Include="Neurosky\WPFHandler.cs" />
+    <Compile Include="Neurosky\IHandler.cs" />
     <Compile Include="SetMyBrainIndexes.cs" />
     <Compile Include="NeuroskyFrequencies.cs" />
     <Compile Include="Neurosky\Utilities.cs" />
-    <Compile Include="SetMyBrainIndexes.xaml.cs">
-      <DependentUpon>SetMyBrainIndexes.xaml</DependentUpon>
+    <Compile Include="SetMyBrainIndexesUserControl.xaml.cs">
+      <DependentUpon>SetMyBrainIndexesUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SmileUserControl.xaml.cs">
+      <DependentUpon>SmileUserControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Statistics\Utilities.cs" />
+    <Page Include="Mensior.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="NeuroskyFrequenciesUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -114,13 +127,16 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="SetMyBrainIndexes.xaml">
+    <Page Include="SetMyBrainIndexesUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SmileUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="NeuroskyData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -143,6 +159,12 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+    <Resource Include="img\ValueMyBrain.jpg" />
+    <Resource Include="img\green.jpg" />
+    <Resource Include="img\green2.jpg" />
+    <Resource Include="img\orange.jpg" />
+    <Resource Include="img\red.jpg" />
+    <Resource Include="img\yellow.jpg" />
     <Content Include="thinkgear64.lib">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

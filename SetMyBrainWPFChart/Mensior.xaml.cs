@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace SetMyBrainWPFChart
 {
     /// <summary>
-    /// Logica di interazione per SetMyBrainIndexes.xaml
+    /// Logica di interazione per Mensior.xaml
     /// </summary>
-    public partial class SetMyBrainIndexes : UserControl
+    public partial class Mensior : UserControl
     {
-        public SetMyBrainIndexes()
+        public Mensior()
         {
             InitializeComponent();
         }

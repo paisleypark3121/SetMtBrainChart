@@ -11,8 +11,8 @@ namespace SetMyBrainChartTest
         [TestMethod]
         public void NeuroskyFrequenciesTest()
         {
-            
-            NeuroskyFrequencies nf = new NeuroskyFrequencies();
+
+            ///NeuroskyFrequencies nf = new NeuroskyFrequencies();
             //int i = 0;
 
             //nf.PropertyChanged += delegate (object sender, PropertyChangedEventArgs e)

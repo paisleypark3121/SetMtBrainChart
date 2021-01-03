@@ -171,29 +171,16 @@ namespace SetMyBrainWPFChart
 
         #endregion
 
-        #region chartValues
-
+        #region frequencies
         private NeuroskyFrequencies _neuroskyFrequencies;
-        public NeuroskyFrequencies NeuroskyFrequencies { get { return _neuroskyFrequencies; } set { _neuroskyFrequencies = value; OnPropertyChanged("NeuroskyFrequencies"); } }
+        public NeuroskyFrequencies NeuroskyFrequencies 
+        { 
+            get { return _neuroskyFrequencies; } 
+            set { _neuroskyFrequencies = value; OnPropertyChanged("NeuroskyFrequencies"); } 
+        }
+        #endregion
 
-        //private float _chartValueAlpha1_value;
-        //private float _chartValueAlpha2_value;
-        //private float _chartValueBeta1_value;
-        //private float _chartValueBeta2_value;
-        //private float _chartValueGamma1_value;
-        //private float _chartValueGamma2_value;
-        //private float _chartValueDelta_value;
-        //private float _chartValueTheta_value;
-
-        //public float ChartValueAlpha1_value { get { return _chartValueAlpha1_value; } set { _chartValueAlpha1_value = value; OnPropertyChanged("Alpha1"); } }
-        //public float ChartValueAlpha2_value { get { return _chartValueAlpha2_value; } set { _chartValueAlpha2_value = value; OnPropertyChanged("Alpha2"); } }
-        //public float ChartValueBeta1_value { get { return _chartValueBeta1_value; } set { _chartValueBeta1_value = value; OnPropertyChanged("Beta1"); } }
-        //public float ChartValueBeta2_value { get { return _chartValueBeta2_value; } set { _chartValueBeta2_value = value; OnPropertyChanged("Beta2"); } }
-        //public float ChartValueGamma1_value { get { return _chartValueGamma1_value; } set { _chartValueGamma1_value = value; OnPropertyChanged("Gamma1"); } }
-        //public float ChartValueGamma2_value { get { return _chartValueGamma2_value; } set { _chartValueGamma2_value = value; OnPropertyChanged("Gamma2"); } }
-        //public float ChartValueDelta_value { get { return _chartValueDelta_value; } set { _chartValueDelta_value = value; OnPropertyChanged("Delta"); } }
-        //public float ChartValueTheta_value { get { return _chartValueTheta_value; } set { _chartValueTheta_value = value; OnPropertyChanged("Theta"); } }
-
+        #region chartValues
         public ChartValues<DateChartModel> ChartValuesAlpha1 { get; set; }
         public ChartValues<DateChartModel> ChartValuesAlpha2 { get; set; }
         public ChartValues<DateChartModel> ChartValuesBeta1 { get; set; }
@@ -240,24 +227,85 @@ namespace SetMyBrainWPFChart
             _deltaSeriesVisibility = true;
             _thetaSeriesVisibility = true;
 
-            this.PropertyChanged += delegate (object sender, PropertyChangedEventArgs e)
-              {
-                  Console.WriteLine(e.PropertyName);
-                  if (e.PropertyName == "NeuroskyFrequencies") {
-                      ChartValuesAlpha1.Add(new DateChartModel
-                      {
-                           DateTime = NeuroskyFrequencies.timestamp,
-                           Value = NeuroskyFrequencies.alpha1
-                      });
-
-                      SetAxisXLimits(NeuroskyFrequencies.timestamp);
-                      if (ChartValuesAlpha1.Count > visibility_limit)
-                          ChartValuesAlpha1.RemoveAt(0);
-                  }
-              };
+            this.PropertyChanged += FrequenciesView;
 
             DataContext = this;
         }
+
+        #region event handler
+        private void SetFrequencies()
+        {
+            ChartValuesAlpha1.Add(new DateChartModel
+            {
+                DateTime = NeuroskyFrequencies.timestamp,
+                Value = NeuroskyFrequencies.alpha1
+            });
+            ChartValuesAlpha2.Add(new DateChartModel
+            {
+                DateTime = NeuroskyFrequencies.timestamp,
+                Value = NeuroskyFrequencies.alpha2
+            });
+            ChartValuesBeta1.Add(new DateChartModel
+            {
+                DateTime = NeuroskyFrequencies.timestamp,
+                Value = NeuroskyFrequencies.beta1
+            });
+            ChartValuesBeta2.Add(new DateChartModel
+            {
+                DateTime = NeuroskyFrequencies.timestamp,
+                Value = NeuroskyFrequencies.beta2
+            });
+            ChartValuesGamma1.Add(new DateChartModel
+            {
+                DateTime = NeuroskyFrequencies.timestamp,
+                Value = NeuroskyFrequencies.gamma1
+            });
+            ChartValuesGamma2.Add(new DateChartModel
+            {
+                DateTime = NeuroskyFrequencies.timestamp,
+                Value = NeuroskyFrequencies.gamma2
+            });
+            ChartValuesDelta.Add(new DateChartModel
+            {
+                DateTime = NeuroskyFrequencies.timestamp,
+                Value = NeuroskyFrequencies.delta
+            });
+            ChartValuesTheta.Add(new DateChartModel
+            {
+                DateTime = NeuroskyFrequencies.timestamp,
+                Value = NeuroskyFrequencies.theta
+            });
+        }
+        private void SetVisibility()
+        {
+            SetAxisXLimits(NeuroskyFrequencies.timestamp);
+
+            if (ChartValuesAlpha1.Count > visibility_limit)
+                ChartValuesAlpha1.RemoveAt(0);
+            if (ChartValuesAlpha2.Count > visibility_limit)
+                ChartValuesAlpha2.RemoveAt(0);
+            if (ChartValuesBeta1.Count > visibility_limit)
+                ChartValuesBeta1.RemoveAt(0);
+            if (ChartValuesBeta2.Count > visibility_limit)
+                ChartValuesBeta2.RemoveAt(0);
+            if (ChartValuesGamma1.Count > visibility_limit)
+                ChartValuesGamma1.RemoveAt(0);
+            if (ChartValuesGamma2.Count > visibility_limit)
+                ChartValuesGamma2.RemoveAt(0);
+            if (ChartValuesDelta.Count > visibility_limit)
+                ChartValuesDelta.RemoveAt(0);
+            if (ChartValuesTheta.Count > visibility_limit)
+                ChartValuesTheta.RemoveAt(0);
+        }
+        private void FrequenciesView(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == "NeuroskyFrequencies") 
+            {
+                SetFrequencies();
+                SetVisibility();
+            }
+        }
+        #endregion
 
         #region INotifyPropertyChanged implementation
 
@@ -265,10 +313,7 @@ namespace SetMyBrainWPFChart
 
         protected virtual void OnPropertyChanged(string propertyName = null)
         {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged.Invoke(this, new PropertyChangedEventArgs(propertyName));
-            }
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
         #endregion
     }
