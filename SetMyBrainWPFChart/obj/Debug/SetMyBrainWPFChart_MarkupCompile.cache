@@ -10,11 +10,11 @@ none
 false
 DEBUG;TRACE
 C:\SetMyBrain\SetMyBrainChart\SetMyBrainWPFChart\App.xaml
-61149301802
+161753554961
 2-1137666398
-18426425199
+28-294256245
 29582752847
-Mensior.xaml;NeuroskyFrequenciesUserControl.xaml;NeuroskyUserControl.xaml;MainWindow.xaml;SetMyBrainIndexesUserControl.xaml;SmileUserControl.xaml;
+BackupMainWindow.xaml;ConnectionUserControl.xaml;LoginUserControl.xaml;LogoUserControl.xaml;Mensior.xaml;NeuroskyFrequenciesUserControl.xaml;NeuroskyUserControl.xaml;MainWindow.xaml;PlayStopUserControl.xaml;ShareUserControl.xaml;SetMyBrainChart.xaml;SetMyBrainIndexesUserControl.xaml;ScoreboardUserControl.xaml;SettingsUserControl.xaml;SmileUserControl.xaml;WIndowUserControl.xaml;
 
 False
 

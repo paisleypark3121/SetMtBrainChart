@@ -5,28 +5,67 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SetMyBrainWPFChart"
         mc:Ignorable="d"
-        Title="SetMyBrain" Height="600" Width="1050">
+        Title="SetMyBrain 4 EGamers" 
+        AllowsTransparency="True" Opacity="1" WindowStyle="None"
+        Height="600" Width="1050">
+    <Window.Resources>
+        <Style TargetType="Separator">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Separator}">
+                        <Rectangle Height="{TemplateBinding Height}" 
+                           Fill="RoyalBlue" />
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="150"></RowDefinition>
             <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="80"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
-            <RowDefinition Height="140"></RowDefinition>
+            <RowDefinition Height="100"></RowDefinition>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*"></ColumnDefinition>
             <ColumnDefinition Width="1*"></ColumnDefinition>
+            <ColumnDefinition Width="2*"></ColumnDefinition>
+            <ColumnDefinition Width="1*"></ColumnDefinition>
+            <ColumnDefinition Width="1*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
-        <Button Grid.Row="0" Grid.ColumnSpan="2" Click="InjectStopOnClick">
+        <local:WIndowUserControl 
+            x:Name="WUC"
+            Grid.Row="0" Grid.Column="4"  HorizontalAlignment="Right" VerticalAlignment="Top" />
+        <local:PlayStopUserControl 
+            x:Name="PSUC"
+            Grid.Row="0" Grid.Column="0" Height="80" VerticalAlignment="Center" HorizontalAlignment="Center" />
+        <local:LogoUserControl Grid.Row="0" Grid.Column="2"></local:LogoUserControl>
+        <local:SettingsUserControl Grid.Row="0" Grid.Column="3" VerticalAlignment="Top" Margin="0,20,35,0" Height="34" HorizontalAlignment="Right" Width="92"/>
+        <local:ScoreboardUserControl Grid.Row="0" Grid.Column="3" VerticalAlignment="Top" Margin="0,60,35,0" Height="34" HorizontalAlignment="Right" Width="119"/>
+        <local:ShareUserControl Grid.Row="0" Grid.Column="3" VerticalAlignment="Top" Margin="0,100,35,0" Height="34" HorizontalAlignment="Right" Width="75"/>
+        <local:LoginUserControl Grid.Row="0" Grid.Column="4" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,10,10,5" Width="132" Height="64"></local:LoginUserControl>
+        <!--<Button Grid.Row="1" Grid.ColumnSpan="5" Click="InjectStopOnClick">
             Inject/Stop Data
-        </Button>
-        <local:NeuroskyFrequenciesUserControl 
-            Grid.Row="1" Grid.Column="0"
+        </Button>-->
+        <Separator Grid.Row="1" Grid.ColumnSpan="5" Height="5" />
+        <local:ConnectionUserControl 
+            x:Name="CUC"
+            Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,0,0" />
+        <local:SetMyBrainChart 
+            Grid.Row="2" Grid.RowSpan="3" Grid.Column="2" Grid.ColumnSpan="3"
+            x:Name="SMBC" 
+            Margin="20,20,20,20" 
+            />
+        <!--<local:NeuroskyFrequenciesUserControl 
+            Grid.Row="2" Grid.Column="0"
             x:Name="NFUC" />
         <local:SetMyBrainIndexesUserControl 
-            Grid.Row="1" Grid.Column="1"
-            x:Name="SMBIUC" />
-        <local:SmileUserControl x:Name="SUC" Grid.Column="0" Grid.Row="2" VerticalAlignment="Bottom" HorizontalAlignment="Center" Height="120" Margin="0,0,10,9.667" Width="502" />
-        <local:Mensior x:Name="MUC" Grid.Column="1" Grid.Row="2" Margin="10,10,0,0" Height="107" VerticalAlignment="Top" HorizontalAlignment="Left" Width="501" />
+            Grid.Row="2" Grid.Column="1"
+            x:Name="SMBIUC" />-->
+        <local:SmileUserControl x:Name="SUC" Grid.Row="4" Grid.ColumnSpan="2" VerticalAlignment="Center" HorizontalAlignment="Center" Height="82" Margin="10,0,50,9.667" Width="288" />
+        <Button Content="Button" HorizontalAlignment="Left" Margin="50,52.667,0,0" Grid.Row="3" VerticalAlignment="Top" Width="75" Click="Button_Click"/>
 
     </Grid>
 </Window>

@@ -279,17 +279,28 @@ namespace SetMyBrainWPFChart.Neurosky
 
             max = min;
 
-            if (min >= 0)
-                min = -Math.Abs(max) * 1.3F;
-            else
-                //min = (-1 - max) * 1.3F;
-                min = (-1 - Math.Abs(max)) * 1.3F;
+            //if (min >= 0)
+            //    min = -Math.Abs(max) * 1.3F;
+            //else
+            //    //min = (-1 - max) * 1.3F;
+            //    min = (-1 - Math.Abs(max)) * 1.3F;
 
-            max = Math.Abs(max) * 1.3F;
-            if (max <= 0)
-                max = Math.Abs(min) * 1.3F;
+            //max = Math.Abs(max) * 1.3F;
+            //if (max <= 0)
+            //    max = Math.Abs(min) * 1.3F;
+            //else
+            //    max = (1 + max) * 1.3F;
+
+            if (min >= 0)
+                min = -Math.Abs(max);
             else
-                max = (1 + max) * 1.3F;
+                min = (-1 - Math.Abs(max));
+
+            max = Math.Abs(max);
+            if (max <= 0)
+                max = Math.Abs(min);
+            else
+                max = (1 + max);
         }
 
         public static void SetMinMaxGross(

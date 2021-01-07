@@ -212,6 +212,8 @@ namespace SetMyBrainWPFChart.Neurosky
                     float TG_DATA_POOR_SIGNAL = (float)connector.GetValue(1);
                     #endregion
 
+                    handler.HandlePoorSignal(TG_DATA_POOR_SIGNAL);
+
                     #region baseline calculation
                     if (!baseline)
                     {

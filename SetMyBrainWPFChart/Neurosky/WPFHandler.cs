@@ -9,6 +9,10 @@ namespace SetMyBrainWPFChart.Neurosky
 {
     public class WPFHandler : IHandler
     {
+        #region PoorSignal
+        float PoorSignal = 0;
+        #endregion
+
         #region NeuroskyFrequencies
         ChartValues<DateChartModel> ChartValuesAlpha1 = null;
         ChartValues<DateChartModel> ChartValuesAlpha2 = null;
@@ -29,6 +33,7 @@ namespace SetMyBrainWPFChart.Neurosky
         #endregion
 
         public WPFHandler(
+            float _TG_DATA_POOR_SIGNAL,
             ChartValues<DateChartModel> _ChartValuesAlpha1,
             ChartValues<DateChartModel> _ChartValuesAlpha2,
             ChartValues<DateChartModel> _ChartValuesBeta1,
@@ -43,6 +48,7 @@ namespace SetMyBrainWPFChart.Neurosky
             ChartValues<DateChartModel> _ChartValuesArousal,
             ChartValues<DateChartModel> _ChartValuesEngagement)
         {
+            PoorSignal = _TG_DATA_POOR_SIGNAL;
             ChartValuesAlpha1 = _ChartValuesAlpha1;
             ChartValuesAlpha2 = _ChartValuesAlpha2;
             ChartValuesBeta1 = _ChartValuesBeta1;
@@ -128,11 +134,16 @@ namespace SetMyBrainWPFChart.Neurosky
                 DateTime = setMyBrainIndexes.timestamp,
                 Value = setMyBrainIndexes.arousal
             });
-            ChartValuesGamma1.Add(new DateChartModel
+            ChartValuesEngagement.Add(new DateChartModel
             {
                 DateTime = setMyBrainIndexes.timestamp,
                 Value = setMyBrainIndexes.engagement
             });
+        }
+
+        public void HandlePoorSignal(object parameters)
+        {
+            PoorSignal = (float)parameters;
         }
     }
 }

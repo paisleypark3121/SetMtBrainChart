@@ -7,7 +7,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
-using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -16,7 +15,6 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
@@ -25,12 +23,10 @@ using System.Windows.Shapes;
 namespace SetMyBrainWPFChart
 {
     /// <summary>
-    /// Logica di interazione per MainWindow.xaml
+    /// Logica di interazione per BackupMainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class BackupMainWindow : Window
     {
-        public bool transparency = false;
-
         Random random = new Random();
         Collector collector = null;
         CancellationTokenSource tokenSource = null;        
@@ -51,64 +47,37 @@ namespace SetMyBrainWPFChart
         private int visibility_limit = 150;
         #endregion
 
-        #region startup
-        private string startup = "mock";
-        #endregion
-
-        private const int GWL_EXSTYLE = -20;
-        private const int WS_EX_NOACTIVATE = 0x08000000;
-
-        [DllImport("user32.dll")]
-        public static extern IntPtr SetWindowLong(IntPtr hWnd, int nIndex, int dwNewLong);
-
-        [DllImport("user32.dll")]
-        public static extern int GetWindowLong(IntPtr hWnd, int nIndex);
-
-        public MainWindow()
+        public BackupMainWindow()
         {
             InitializeComponent();
-
-            this.Top = 0;
-            this.Left = 0;
 
             appSettings = new AppSettings.AppSettings();
             connector = new ThinkgearConnector(new string[] { appSettings["COM"] });
             connector.Connect();
             visibility_limit = int.Parse(appSettings["visibility_limit"]);
-            startup = appSettings["startup"];
-            if (string.IsNullOrEmpty(startup))
-                startup = "mock";
-            if ((startup != "mock") && (startup != "real"))
-                startup = "mock";
 
             handler = new WPFHandler(
-                CUC.PoorSignal,
-                SMBC.ChartValuesAlpha1,
-                SMBC.ChartValuesAlpha2,
-                SMBC.ChartValuesBeta1,
-                SMBC.ChartValuesBeta2,
-                SMBC.ChartValuesGamma1,
-                SMBC.ChartValuesGamma2,
-                SMBC.ChartValuesDelta,
-                SMBC.ChartValuesTheta,
-                SMBC.ChartValuesAttention,
-                SMBC.ChartValuesCreativity,
-                SMBC.ChartValuesImmersion,
-                SMBC.ChartValuesArousal,
-                SMBC.ChartValuesEngagement);
+                0,
+                NFUC.ChartValuesAlpha1,
+                NFUC.ChartValuesAlpha2,
+                NFUC.ChartValuesBeta1,
+                NFUC.ChartValuesBeta2,
+                NFUC.ChartValuesGamma1,
+                NFUC.ChartValuesGamma2,
+                NFUC.ChartValuesDelta,
+                NFUC.ChartValuesTheta,
+                SMBIUC.ChartValuesAttention,
+                SMBIUC.ChartValuesCreativity,
+                SMBIUC.ChartValuesImmersion,
+                SMBIUC.ChartValuesArousal,
+                SMBIUC.ChartValuesEngagement);
 
-            PSUC.PropertyChanged += PSUCChangedEventHandler;
-            WUC.PropertyChanged += WUCChangedEventHandler;
-            //CUC.PropertyChanged += CUCChangedEventHandler;
-
-            SMBC.visibility_limit = visibility_limit;
+            NFUC.visibility_limit = visibility_limit;
 
             tokenSource = new CancellationTokenSource();
             collector = new Collector(null, appSettings, connector, handler, tokenSource);
 
             IsReading = false;
-
-            //this.Topmost = true;
         }
 
         public bool IsReading { get; set; }
@@ -722,26 +691,24 @@ namespace SetMyBrainWPFChart
         {
             try
             {
-                SMBC.ChartValuesAlpha1.Clear();
-                SMBC.ChartValuesAttention.Clear();
+                NFUC.ChartValuesAlpha1.Clear();
+                SMBIUC.ChartValuesAttention.Clear();
 
                 while (true)
                 {
                     DateTime _dateTime = DateTime.Now;
 
                     float alpha1 = random.Next(0, 100);
-                    SMBC.NeuroskyFrequencies = new NeuroskyFrequencies(_dateTime, alpha1, 0, 0, 0, 0, 0, 0, 0);
-                    SMBC.SetAxisXLimits(_dateTime);
-                    if (SMBC.ChartValuesAlpha1.Count > visibility_limit)
-                        SMBC.ChartValuesAlpha1.RemoveAt(0);
+                    NFUC.NeuroskyFrequencies = new NeuroskyFrequencies(_dateTime, alpha1, 0, 0, 0, 0, 0, 0, 0);
+                    NFUC.SetAxisXLimits(_dateTime);
+                    if (NFUC.ChartValuesAlpha1.Count > visibility_limit)
+                        NFUC.ChartValuesAlpha1.RemoveAt(0);
 
                     float attention = random.Next(0, 100);
-                    SMBC.SetMyBrainIndexes = new SetMyBrainIndexes(_dateTime, attention, 0, 0, 0, 0);
-                    SMBC.SetAxisXLimits(_dateTime);
-                    if (SMBC.ChartValuesAttention.Count > visibility_limit)
-                        SMBC.ChartValuesAttention.RemoveAt(0);
-
-                    float poor_signal = random.Next(0, 255);
+                    SMBIUC.SetMyBrainIndexes = new SetMyBrainIndexes(_dateTime, attention, 0, 0, 0, 0);
+                    SMBIUC.SetAxisXLimits(_dateTime);
+                    if (SMBIUC.ChartValuesAttention.Count > visibility_limit)
+                        SMBIUC.ChartValuesAttention.RemoveAt(0);
 
                     float totalValue = alpha1 + attention;
                     Dispatcher.Invoke(() =>{
@@ -793,12 +760,6 @@ namespace SetMyBrainWPFChart
                     if (token.IsCancellationRequested)
                         token.ThrowIfCancellationRequested();
 
-                    float poorSignal = random.Next(0, 255);
-                    Dispatcher.Invoke(() =>
-                    {
-                        CUC.PoorSignal = poorSignal;
-                    });
-
                     Thread.Sleep(1000);
                 }
             }
@@ -808,7 +769,7 @@ namespace SetMyBrainWPFChart
             }
         }
 
-        private void PSUCChangedEventHandler(object sender, PropertyChangedEventArgs e)
+        private void InjectStopOnClick(object sender, RoutedEventArgs e)
         {
             Task readTask;
             if (!IsReading)
@@ -816,90 +777,15 @@ namespace SetMyBrainWPFChart
                 tokenSource = new CancellationTokenSource();
 
                 IsReading = !IsReading;
-                if (startup == "mock")
-                    readTask = Task.Run(() => this.MockRead(tokenSource.Token), tokenSource.Token);
-                else
-                    readTask = Task.Run(() => collector.DoWork(), tokenSource.Token);
+                //readTask= Task.Run(() => collector.DoWork(), tokenSource.Token);
+                readTask = Task.Run(() => this.MockRead(tokenSource.Token), tokenSource.Token);
             }
             else
             {
                 IsReading = !IsReading;
                 tokenSource.Cancel();
-            }
+            }                
         }
-
-        private void WUCChangedEventHandler(object sender, PropertyChangedEventArgs e)
-        {
-            if (e.PropertyName == "move")
-            {
-                if ((this.Top == 0) && (this.Left == 0))
-                {
-                    this.Left = SystemParameters.PrimaryScreenWidth - this.Width;
-                } 
-                else if ((this.Top == 0) && (this.Left == SystemParameters.PrimaryScreenWidth - this.Width))
-                {
-                    this.Top = SystemParameters.PrimaryScreenHeight - this.Height;
-                }
-                else if ((this.Top == SystemParameters.PrimaryScreenHeight - this.Height) && (this.Left == SystemParameters.PrimaryScreenWidth - this.Width))
-                {
-                    this.Left = 0;
-                }
-                else if ((this.Top == SystemParameters.PrimaryScreenHeight - this.Height) && (this.Left == 0))
-                {
-                    this.Top = 0;
-                }
-            }
-
-            if (e.PropertyName == "minimize")
-            {   
-                WindowState = WindowState.Minimized;
-            }
-
-            if (e.PropertyName == "close")
-            {
-                Application.Current.Shutdown();
-            }
-
-            if (e.PropertyName == "anchor")
-            {
-                this.Topmost = !this.Topmost;
-            }
-
-            if (e.PropertyName == "opacity")
-            {
-                if (this.Opacity == 1)
-                    this.Opacity = 0.6;
-                else
-                    this.Opacity = 1;
-            }
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            this.Top = 0;
-            this.Left = SystemParameters.PrimaryScreenWidth - this.Width;
-        }
-
-
-        //private void InjectStopOnClick(object sender, RoutedEventArgs e)
-        //{
-        //    Task readTask;
-        //    if (!IsReading)
-        //    {
-        //        tokenSource = new CancellationTokenSource();
-
-        //        IsReading = !IsReading;
-        //        if (startup=="mock")
-        //            readTask = Task.Run(() => this.MockRead(tokenSource.Token), tokenSource.Token);
-        //        else
-        //            readTask= Task.Run(() => collector.DoWork(), tokenSource.Token);
-        //    }
-        //    else
-        //    {
-        //        IsReading = !IsReading;
-        //        tokenSource.Cancel();
-        //    }                
-        //}
 
         //private void Chart(ChartValues<DateChartModel> chartValues, DateTime datetime, float TG_DATA)
         //{

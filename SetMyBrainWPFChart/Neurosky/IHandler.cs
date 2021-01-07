@@ -8,6 +8,7 @@ namespace SetMyBrainWPFChart.Neurosky
 {
     public interface IHandler
     {
+        void HandlePoorSignal(object parameters);
         void HandleFrequencies(object parameters);
         void HandleIndexes(object parameters);
     }

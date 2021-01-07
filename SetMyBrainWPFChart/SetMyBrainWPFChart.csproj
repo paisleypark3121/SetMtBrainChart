@@ -80,6 +80,18 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="BackupMainWindow.xaml.cs">
+      <DependentUpon>BackupMainWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ConnectionUserControl.xaml.cs">
+      <DependentUpon>ConnectionUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="LoginUserControl.xaml.cs">
+      <DependentUpon>LoginUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="LogoUserControl.xaml.cs">
+      <DependentUpon>LogoUserControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Mensior.xaml.cs">
       <DependentUpon>Mensior.xaml</DependentUpon>
     </Compile>
@@ -89,16 +101,50 @@
     <Compile Include="Neurosky\Collector.cs" />
     <Compile Include="Neurosky\WPFHandler.cs" />
     <Compile Include="Neurosky\IHandler.cs" />
+    <Compile Include="PlayStopUserControl.xaml.cs">
+      <DependentUpon>PlayStopUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ShareUserControl.xaml.cs">
+      <DependentUpon>ShareUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SetMyBrainChart.xaml.cs">
+      <DependentUpon>SetMyBrainChart.xaml</DependentUpon>
+    </Compile>
     <Compile Include="SetMyBrainIndexes.cs" />
     <Compile Include="NeuroskyFrequencies.cs" />
     <Compile Include="Neurosky\Utilities.cs" />
     <Compile Include="SetMyBrainIndexesUserControl.xaml.cs">
       <DependentUpon>SetMyBrainIndexesUserControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ScoreboardUserControl.xaml.cs">
+      <DependentUpon>ScoreboardUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SettingsUserControl.xaml.cs">
+      <DependentUpon>SettingsUserControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="SmileUserControl.xaml.cs">
       <DependentUpon>SmileUserControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Statistics\Utilities.cs" />
+    <Compile Include="WIndowUserControl.xaml.cs">
+      <DependentUpon>WIndowUserControl.xaml</DependentUpon>
+    </Compile>
+    <Page Include="BackupMainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ConnectionUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="LoginUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="LogoUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Mensior.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -127,11 +173,35 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="PlayStopUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ShareUserControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="SetMyBrainChart.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="SetMyBrainIndexesUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="ScoreboardUserControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="SettingsUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="SmileUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="WIndowUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -165,6 +235,18 @@
     <Resource Include="img\orange.jpg" />
     <Resource Include="img\red.jpg" />
     <Resource Include="img\yellow.jpg" />
+    <Resource Include="img\SetMyBrain4EGamers.png" />
+    <Resource Include="img\login.png" />
+    <Resource Include="img\settings.png" />
+    <Resource Include="img\scoreboard.png" />
+    <Resource Include="img\share.png" />
+    <Resource Include="img\play.png" />
+    <Resource Include="img\stop.png" />
+    <Resource Include="img\close.png" />
+    <Resource Include="img\minimize.png" />
+    <Resource Include="img\anchor.png" />
+    <Resource Include="img\opacity.png" />
+    <Resource Include="img\move.png" />
     <Content Include="thinkgear64.lib">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

@@ -21,28 +21,14 @@ namespace SetMyBrainWPFChart
     /// </summary>
     public partial class SmileUserControl : UserControl, INotifyPropertyChanged
     {
-        //#region index
-        //private string _setSmileValueIndex;
-        //public string SetSmileValueIndex
-        //{
-        //    get { return _setSmileValueIndex; }
-        //    set { _setSmileValueIndex = value; OnPropertyChanged("SetSmileValueIndex"); }
-        //}
-        //#endregion
-
-        //public string SmileIndexValue { get; set; }
-
         public string SmileIndexValue
         {
             get { return (string)GetValue(SmileIndexValueProperty); }
             set { SetValue(SmileIndexValueProperty, value); }
         }
 
-        // Using a DependencyProperty as the backing store for SmileIndexValue.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty SmileIndexValueProperty =
             DependencyProperty.Register("SmileIndexValue", typeof(string), typeof(SmileUserControl), new PropertyMetadata(default(string)));
-
-
 
         #region visibility
         private bool _redValueVisibility;
@@ -110,19 +96,8 @@ namespace SetMyBrainWPFChart
 
             SmileIndexValue = "Index: 0";
 
-            //this.PropertyChanged += SmileValueIndexView;
-
             DataContext = this;
         }
-
-        //private void SmileValueIndexView(object sender, PropertyChangedEventArgs e)
-        //{
-        //    //if (e.PropertyName == "SetSmileValueIndex")
-        //    //{
-        //    //    //SmileIndexValue = SetSmileValueIndex;
-        //    //    Console.WriteLine(SmileIndexValue);
-        //    //}
-        //}
 
         #region INotifyPropertyChanged implementation
 
