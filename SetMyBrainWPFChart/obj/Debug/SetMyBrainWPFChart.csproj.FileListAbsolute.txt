@@ -67,3 +67,7 @@ C:\SetMyBrain\SetMyBrainChart\SetMyBrainWPFChart\obj\Debug\ConnectionUserControl
 C:\SetMyBrain\SetMyBrainChart\SetMyBrainWPFChart\obj\Debug\ConnectionUserControl.baml
 C:\SetMyBrain\SetMyBrainChart\SetMyBrainWPFChart\obj\Debug\WIndowUserControl.g.cs
 C:\SetMyBrain\SetMyBrainChart\SetMyBrainWPFChart\obj\Debug\WIndowUserControl.baml
+C:\SetMyBrain\SetMyBrainChart\SetMyBrainWPFChart\obj\Debug\TimeUserControl.g.cs
+C:\SetMyBrain\SetMyBrainChart\SetMyBrainWPFChart\obj\Debug\TimeUserControl.baml
+C:\SetMyBrain\SetMyBrainChart\SetMyBrainWPFChart\obj\Debug\InTheFlowUserControl.g.cs
+C:\SetMyBrain\SetMyBrainChart\SetMyBrainWPFChart\obj\Debug\InTheFlowUserControl.baml

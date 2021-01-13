@@ -86,6 +86,9 @@
     <Compile Include="ConnectionUserControl.xaml.cs">
       <DependentUpon>ConnectionUserControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="InTheFlowUserControl.xaml.cs">
+      <DependentUpon>InTheFlowUserControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="LoginUserControl.xaml.cs">
       <DependentUpon>LoginUserControl.xaml</DependentUpon>
     </Compile>
@@ -126,6 +129,9 @@
       <DependentUpon>SmileUserControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Statistics\Utilities.cs" />
+    <Compile Include="TimeUserControl.xaml.cs">
+      <DependentUpon>TimeUserControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="WIndowUserControl.xaml.cs">
       <DependentUpon>WIndowUserControl.xaml</DependentUpon>
     </Compile>
@@ -134,6 +140,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="ConnectionUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="InTheFlowUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -198,6 +208,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="SmileUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="TimeUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

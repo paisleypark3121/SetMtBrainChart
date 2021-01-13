@@ -33,7 +33,8 @@ namespace SetMyBrainWPFChart
 
         Random random = new Random();
         Collector collector = null;
-        CancellationTokenSource tokenSource = null;        
+        CancellationTokenSource tokenSource = null;
+        CancellationTokenSource tokenTimeUserControl = null;
 
         #region AppSettings
         IAppSettings appSettings = null;
@@ -54,15 +55,6 @@ namespace SetMyBrainWPFChart
         #region startup
         private string startup = "mock";
         #endregion
-
-        private const int GWL_EXSTYLE = -20;
-        private const int WS_EX_NOACTIVATE = 0x08000000;
-
-        [DllImport("user32.dll")]
-        public static extern IntPtr SetWindowLong(IntPtr hWnd, int nIndex, int dwNewLong);
-
-        [DllImport("user32.dll")]
-        public static extern int GetWindowLong(IntPtr hWnd, int nIndex);
 
         public MainWindow()
         {
@@ -99,7 +91,8 @@ namespace SetMyBrainWPFChart
 
             PSUC.PropertyChanged += PSUCChangedEventHandler;
             WUC.PropertyChanged += WUCChangedEventHandler;
-            //CUC.PropertyChanged += CUCChangedEventHandler;
+
+            TUC.Now = DateTime.Now;
 
             SMBC.visibility_limit = visibility_limit;
 
@@ -108,7 +101,7 @@ namespace SetMyBrainWPFChart
 
             IsReading = false;
 
-            //this.Topmost = true;
+            Task.Run(() => this.TimeTask());
         }
 
         public bool IsReading { get; set; }
@@ -718,6 +711,54 @@ namespace SetMyBrainWPFChart
         //}
         #endregion
 
+        private void TimeTask()
+        {
+            while (true)
+            {
+                Dispatcher.Invoke(
+                    () => {
+                        TUC.Now = DateTime.Now;
+                    });
+                Thread.Sleep(1000);
+            }
+        }
+
+        private void StartStopTimeTask(CancellationToken token)
+        {
+            #region NOW
+            Dispatcher.Invoke(
+                () => {
+                    TUC.Start = DateTime.Now;
+                });
+            #endregion
+
+            #region ELAPSED
+            Stopwatch sw = new Stopwatch();
+
+            try
+            {
+                while (true)
+                {
+                    sw.Start();
+                    Dispatcher.Invoke(
+                        () =>
+                        {
+                            TUC.Elapsed = sw.Elapsed;
+                        });
+                    Thread.Sleep(1000);
+
+                    if (token.IsCancellationRequested)
+                        token.ThrowIfCancellationRequested();
+                }
+            }
+            catch (OperationCanceledException)
+            {
+                Console.WriteLine("CANCELLED SSTT");
+                sw.Stop();
+            }
+            #endregion
+        }
+
         private void MockRead(CancellationToken token)
         {
             try
@@ -740,6 +781,11 @@ namespace SetMyBrainWPFChart
                     SMBC.SetAxisXLimits(_dateTime);
                     if (SMBC.ChartValuesAttention.Count > visibility_limit)
                         SMBC.ChartValuesAttention.RemoveAt(0);
+
+                    float creativity = random.Next(0, 100);
+                    Dispatcher.Invoke(() => {
+                        ITFUC.SetMyBrainIndexes = new SetMyBrainIndexes(_dateTime, attention, creativity, 0, 0, 0);
+                    });
 
                     float poor_signal = random.Next(0, 255);
 
@@ -811,20 +857,25 @@ namespace SetMyBrainWPFChart
         private void PSUCChangedEventHandler(object sender, PropertyChangedEventArgs e)
         {
             Task readTask;
+            Task timeTask;
             if (!IsReading)
             {
                 tokenSource = new CancellationTokenSource();
+                tokenTimeUserControl = new CancellationTokenSource();
 
                 IsReading = !IsReading;
                 if (startup == "mock")
                     readTask = Task.Run(() => this.MockRead(tokenSource.Token), tokenSource.Token);
                 else
                     readTask = Task.Run(() => collector.DoWork(), tokenSource.Token);
+
+                timeTask = Task.Run(() => this.StartStopTimeTask(tokenTimeUserControl.Token), tokenTimeUserControl.Token);
             }
             else
             {
                 IsReading = !IsReading;
                 tokenSource.Cancel();
+                tokenTimeUserControl.Cancel();
             }
         }
 
@@ -873,41 +924,5 @@ namespace SetMyBrainWPFChart
                     this.Opacity = 1;
             }
         }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            this.Top = 0;
-            this.Left = SystemParameters.PrimaryScreenWidth - this.Width;
-        }
-
-
-        //private void InjectStopOnClick(object sender, RoutedEventArgs e)
-        //{
-        //    Task readTask;
-        //    if (!IsReading)
-        //    {
-        //        tokenSource = new CancellationTokenSource();
-
-        //        IsReading = !IsReading;
-        //        if (startup=="mock")
-        //            readTask = Task.Run(() => this.MockRead(tokenSource.Token), tokenSource.Token);
-        //        else
-        //            readTask= Task.Run(() => collector.DoWork(), tokenSource.Token);
-        //    }
-        //    else
-        //    {
-        //        IsReading = !IsReading;
-        //        tokenSource.Cancel();
-        //    }                
-        //}
-
-        //private void Chart(ChartValues<DateChartModel> chartValues, DateTime datetime, float TG_DATA)
-        //{
-        //    chartValues.Add(new DateChartModel
-        //    {
-        //        DateTime = datetime,
-        //        Value = TG_DATA
-        //    });
-        //}
     }
 }
