@@ -29,6 +29,10 @@ namespace SetMyBrainWPFChart
     /// </summary>
     public partial class MainWindow : Window
     {
+        #region SOCIAL 
+
+        #endregion
+
         public bool transparency = false;
 
         Random random = new Random();

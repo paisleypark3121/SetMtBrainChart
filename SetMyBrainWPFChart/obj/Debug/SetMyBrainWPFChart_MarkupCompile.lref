@@ -2,6 +2,8 @@
 
 FC:\SetMyBrain\SetMyBrainChart\SetMyBrainWPFChart\BackupMainWindow.xaml;;
 FC:\SetMyBrain\SetMyBrainChart\SetMyBrainWPFChart\ConnectionUserControl.xaml;;
+FC:\SetMyBrain\SetMyBrainChart\SetMyBrainWPFChart\FacebookUserControl.xaml;;
+FC:\SetMyBrain\SetMyBrainChart\SetMyBrainWPFChart\InTheFlowUserControl.xaml;;
 FC:\SetMyBrain\SetMyBrainChart\SetMyBrainWPFChart\LoginUserControl.xaml;;
 FC:\SetMyBrain\SetMyBrainChart\SetMyBrainWPFChart\LogoUserControl.xaml;;
 FC:\SetMyBrain\SetMyBrainChart\SetMyBrainWPFChart\Mensior.xaml;;
@@ -16,5 +18,5 @@ FC:\SetMyBrain\SetMyBrainChart\SetMyBrainWPFChart\SettingsUserControl.xaml;;
 FC:\SetMyBrain\SetMyBrainChart\SetMyBrainWPFChart\SmileUserControl.xaml;;
 FC:\SetMyBrain\SetMyBrainChart\SetMyBrainWPFChart\TimeUserControl.xaml;;
 FC:\SetMyBrain\SetMyBrainChart\SetMyBrainWPFChart\WIndowUserControl.xaml;;
-FC:\SetMyBrain\SetMyBrainChart\SetMyBrainWPFChart\InTheFlowUserControl.xaml;;
+FC:\SetMyBrain\SetMyBrainChart\SetMyBrainWPFChart\LoginWindow.xaml;;
 

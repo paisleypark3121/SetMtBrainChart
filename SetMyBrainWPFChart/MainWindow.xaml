@@ -69,6 +69,10 @@
             />
         <local:SmileUserControl 
             x:Name="SUC" Grid.Row="6" Grid.ColumnSpan="2" VerticalAlignment="Bottom" HorizontalAlignment="Left"  />
+        <local:FacebookUserControl
+            Grid.Row="0" Grid.Column="1">
+            
+        </local:FacebookUserControl>
 
     </Grid>
 </Window>
