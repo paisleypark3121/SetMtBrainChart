@@ -11,5 +11,8 @@ namespace SetMyBrainWPFChart.Neurosky
         void HandlePoorSignal(object parameters);
         void HandleFrequencies(object parameters);
         void HandleIndexes(object parameters);
+        void HandleSlopes(object parameters);
+
+        void HandleFlow(object parameters);
     }
 }

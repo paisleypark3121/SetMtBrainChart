@@ -10,6 +10,7 @@ C:\SetMyBrain\SetMyBrainChart\SetMyBrainChart\bin\Debug\LiveCharts.WinForms.pdb
 C:\SetMyBrain\SetMyBrainChart\SetMyBrainChart\bin\Debug\LiveCharts.WinForms.xml
 C:\SetMyBrain\SetMyBrainChart\SetMyBrainChart\bin\Debug\LiveCharts.Wpf.pdb
 C:\SetMyBrain\SetMyBrainChart\SetMyBrainChart\bin\Debug\LiveCharts.Wpf.xml
+C:\SetMyBrain\SetMyBrainChart\SetMyBrainChart\obj\Debug\SetMyBrainChart.csprojAssemblyReference.cache
 C:\SetMyBrain\SetMyBrainChart\SetMyBrainChart\obj\Debug\SetMyBrainChart.SetMyBrainMainForm.resources
 C:\SetMyBrain\SetMyBrainChart\SetMyBrainChart\obj\Debug\SetMyBrainChart.Properties.Resources.resources
 C:\SetMyBrain\SetMyBrainChart\SetMyBrainChart\obj\Debug\SetMyBrainChart.csproj.GenerateResource.cache
@@ -17,4 +18,3 @@ C:\SetMyBrain\SetMyBrainChart\SetMyBrainChart\obj\Debug\SetMyBrainChart.csproj.C
 C:\SetMyBrain\SetMyBrainChart\SetMyBrainChart\obj\Debug\SetMyBrainChart.csproj.CopyComplete
 C:\SetMyBrain\SetMyBrainChart\SetMyBrainChart\obj\Debug\SetMyBrainChart.exe
 C:\SetMyBrain\SetMyBrainChart\SetMyBrainChart\obj\Debug\SetMyBrainChart.pdb
-C:\SetMyBrain\SetMyBrainChart\SetMyBrainChart\obj\Debug\SetMyBrainChart.csprojAssemblyReference.cache

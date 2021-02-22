@@ -1,5 +1,6 @@
 ﻿using AppSettings;
 using Connector;
+using SetMyBrainWPFChart.Log;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -14,9 +15,10 @@ namespace SetMyBrainWPFChart.Neurosky
     {
         #region variables
         private IAppSettings appSettings = null;
-        private CancellationToken token;
+        //private CancellationToken token;
         private IConnector connector;
         private IHandler handler;
+        private Dictionary<string,ILog> log;
 
         private string[] args = null;
         #endregion
@@ -26,14 +28,17 @@ namespace SetMyBrainWPFChart.Neurosky
             IAppSettings _appSettings,
             IConnector _connector,
             IHandler _handler,
-            CancellationTokenSource tokenSource)
+            Dictionary<string, ILog> _log
+            //,CancellationTokenSource tokenSource
+            )
         {
             #region variables
             args = _args;
             appSettings = _appSettings;
             handler = _handler;
-            token = tokenSource.Token;
+            //token = tokenSource.Token;
             connector = _connector;
+            log = _log;
             #endregion
 
             connector.Connect();
@@ -44,7 +49,7 @@ namespace SetMyBrainWPFChart.Neurosky
             connector.Disconnect();
         }
 
-        public void DoWork()
+        public async Task DoWorkAsync(CancellationToken token)
         {
             #region structure
             Dictionary<string, object> previous = null;
@@ -170,6 +175,21 @@ namespace SetMyBrainWPFChart.Neurosky
 
             #endregion
 
+            #region flow
+            float[] SlopeThetaRelPower = new float[10];
+            float[] SlopeAlphaHighRelPower = new float[10];
+            float[] SlopeBetaLowRelPower = new float[10];
+            float[] SlopePower = new float[10];
+
+            for (int i=0;i<10;i++)
+            {
+                SlopeThetaRelPower[i] = 0;
+                SlopeAlphaHighRelPower[i] = 0;
+                SlopeBetaLowRelPower[i] = 0;
+                SlopePower[i] = 0;
+            }
+            #endregion
+
             #endregion
             #region try
             try
@@ -235,6 +255,39 @@ namespace SetMyBrainWPFChart.Neurosky
                                 immersion_30[slider] = Utilities.Immersion(TG_DATA_THETA, TG_DATA_ALPHA1, TG_DATA_ALPHA2);
 
                                 slider++;
+
+                                Utilities.SetSlopes(
+                                    ref SlopeThetaRelPower, 
+                                    ref SlopeBetaLowRelPower, 
+                                    ref SlopeAlphaHighRelPower, 
+                                    ref SlopePower, 
+                                    TG_DATA_ALPHA2, 
+                                    TG_DATA_BETA1, 
+                                    TG_DATA_DELTA, 
+                                    RelPower);
+
+                                float slopeThetaRelPower = Statistics.Utilities.Slope(SlopeThetaRelPower);
+                                float slopeBetaLowRelPower = Statistics.Utilities.Slope(SlopeBetaLowRelPower);
+                                float slopeAlphaHighRelPower = Statistics.Utilities.Slope(SlopeAlphaHighRelPower);
+                                float slopePower = Statistics.Utilities.Slope(SlopePower);
+
+                                await Utilities.LogSlopesAsync(log, _datetime, slopeThetaRelPower, slopeBetaLowRelPower, slopeAlphaHighRelPower, slopePower);
+
+                                #region chartValues
+                                handler.HandleSlopes(
+                                    new SetMyBrainSlopes(
+                                        _datetime,
+                                        slopeThetaRelPower,
+                                        slopeBetaLowRelPower,
+                                        slopeAlphaHighRelPower,
+                                        slopePower
+                                    )
+                                );
+                                #endregion
+
+                                bool flow =Utilities.InTheFlow(slopeThetaRelPower, slopeBetaLowRelPower, slopeAlphaHighRelPower, slopePower);
+
+                                handler.HandleFlow(flow);
                             }
                         }
                         #endregion
@@ -339,6 +392,51 @@ namespace SetMyBrainWPFChart.Neurosky
                                 );
                                 #endregion
 
+                                await Utilities.LogFrequenciesAsync(
+                                    log,
+                                    _datetime,
+                                    TG_DATA_ALPHA1,
+                                    TG_DATA_ALPHA2,
+                                    TG_DATA_BETA1,
+                                    TG_DATA_BETA2,
+                                    TG_DATA_GAMMA1,
+                                    TG_DATA_GAMMA2,
+                                    TG_DATA_DELTA,
+                                    TG_DATA_THETA);
+
+                                Utilities.SetSlopes(
+                                    ref SlopeThetaRelPower,
+                                    ref SlopeBetaLowRelPower,
+                                    ref SlopeAlphaHighRelPower,
+                                    ref SlopePower,
+                                    TG_DATA_ALPHA2,
+                                    TG_DATA_BETA1,
+                                    TG_DATA_DELTA,
+                                    RelPower);
+
+                                float slopeThetaRelPower = Statistics.Utilities.Slope(SlopeThetaRelPower);
+                                float slopeBetaLowRelPower = Statistics.Utilities.Slope(SlopeBetaLowRelPower);
+                                float slopeAlphaHighRelPower = Statistics.Utilities.Slope(SlopeAlphaHighRelPower);
+                                float slopePower = Statistics.Utilities.Slope(SlopePower);
+
+                                await Utilities.LogSlopesAsync(log, _datetime, slopeThetaRelPower, slopeBetaLowRelPower, slopeAlphaHighRelPower, slopePower);
+
+                                #region chartValues
+                                handler.HandleSlopes(
+                                    new SetMyBrainSlopes(
+                                        _datetime,
+                                        slopeThetaRelPower,
+                                        slopeBetaLowRelPower,
+                                        slopeAlphaHighRelPower,
+                                        slopePower
+                                    )
+                                );
+                                #endregion
+
+                                bool flow = Utilities.InTheFlow(slopeThetaRelPower, slopeBetaLowRelPower, slopeAlphaHighRelPower, slopePower);
+
+                                handler.HandleFlow(flow);
+
                                 previous_b = RelPower;
 
                                 attention_30[slider] = Utilities.Attention(TG_DATA_THETA, TG_DATA_ALPHA1, TG_DATA_ALPHA2);
@@ -441,6 +539,18 @@ namespace SetMyBrainWPFChart.Neurosky
                             );
                             #endregion
 
+                            await Utilities.LogFrequenciesAsync(
+                                log, 
+                                _datetime,
+                                TG_DATA_ALPHA1,
+                                TG_DATA_ALPHA2,
+                                TG_DATA_BETA1,
+                                TG_DATA_BETA2,
+                                TG_DATA_GAMMA1,
+                                TG_DATA_GAMMA2,
+                                TG_DATA_DELTA,
+                                TG_DATA_THETA);
+
                             #region new parameters
 
                             float RelPower = Utilities.RelPower(TG_DATA_ALPHA1, TG_DATA_ALPHA2, TG_DATA_BETA1, TG_DATA_BETA2, TG_DATA_DELTA, TG_DATA_GAMMA1, TG_DATA_GAMMA2, TG_DATA_THETA);
@@ -489,6 +599,14 @@ namespace SetMyBrainWPFChart.Neurosky
                             float grossIndex_arousal_normalized = Utilities.grossIndexNormalized(grossIndex_arousal, min_grossIndex_arousal, max_grossIndex_arousal);
                             float grossIndex_immersion_normalized = Utilities.grossIndexNormalized(grossIndex_immersion, min_grossIndex_immersion, max_grossIndex_immersion);
 
+                            await Utilities.LogIndexesAsync(
+                                log, _datetime, 
+                                grossIndex_attention_normalized, 
+                                grossIndex_creativity_normalized, 
+                                grossIndex_engagement_normalized, 
+                                grossIndex_arousal_normalized, 
+                                grossIndex_immersion_normalized);
+
                             #endregion
 
                             #region chartValues
@@ -503,6 +621,39 @@ namespace SetMyBrainWPFChart.Neurosky
                                 )
                             );
                             #endregion
+
+                            Utilities.SetSlopes(
+                                    ref SlopeThetaRelPower,
+                                    ref SlopeBetaLowRelPower,
+                                    ref SlopeAlphaHighRelPower,
+                                    ref SlopePower,
+                                    TG_DATA_ALPHA2,
+                                    TG_DATA_BETA1,
+                                    TG_DATA_DELTA,
+                                    RelPower);
+
+                            float slopeThetaRelPower = Statistics.Utilities.Slope(SlopeThetaRelPower);
+                            float slopeBetaLowRelPower = Statistics.Utilities.Slope(SlopeBetaLowRelPower);
+                            float slopeAlphaHighRelPower = Statistics.Utilities.Slope(SlopeAlphaHighRelPower);
+                            float slopePower = Statistics.Utilities.Slope(SlopePower);
+
+                            await Utilities.LogSlopesAsync(log, _datetime, slopeThetaRelPower, slopeBetaLowRelPower, slopeAlphaHighRelPower, slopePower);
+
+                            #region chartValues
+                            handler.HandleSlopes(
+                                new SetMyBrainSlopes(
+                                    _datetime,
+                                    slopeThetaRelPower,
+                                    slopeBetaLowRelPower,
+                                    slopeAlphaHighRelPower,
+                                    slopePower
+                                )
+                            );
+                            #endregion
+
+                            bool flow = Utilities.InTheFlow(slopeThetaRelPower, slopeBetaLowRelPower, slopeAlphaHighRelPower, slopePower);
+
+                            handler.HandleFlow(flow);
 
                             Thread.Sleep(800);
                         }
@@ -553,7 +704,7 @@ namespace SetMyBrainWPFChart.Neurosky
             #region catch
             catch (OperationCanceledException)
             {
-
+                Trace.TraceInformation("OperationCancelled");
             }
             #endregion
         }

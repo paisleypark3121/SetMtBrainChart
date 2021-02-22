@@ -1,11 +1,13 @@
 ﻿using AppSettings;
 using Connector;
 using LiveCharts;
+using SetMyBrainWPFChart.Log;
 using SetMyBrainWPFChart.Neurosky;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -56,9 +58,18 @@ namespace SetMyBrainWPFChart
         private int visibility_limit = 150;
         #endregion
 
+        #region TAG
+        string tag = "SetMyBrain";
+        #endregion
+
         #region startup
         private string startup = "mock";
         #endregion
+
+        #region logging
+        Dictionary<string,ILog> log = null;
+        #endregion
+
 
         public MainWindow()
         {
@@ -69,29 +80,58 @@ namespace SetMyBrainWPFChart
 
             appSettings = new AppSettings.AppSettings();
             connector = new ThinkgearConnector(new string[] { appSettings["COM"] });
-            connector.Connect();
+            //connector.Connect();
             visibility_limit = int.Parse(appSettings["visibility_limit"]);
             startup = appSettings["startup"];
             if (string.IsNullOrEmpty(startup))
                 startup = "mock";
             if ((startup != "mock") && (startup != "real"))
                 startup = "mock";
+            tag = appSettings["tag"];
+            bool _log = false;
+            bool.TryParse(appSettings["log"].ToString(),out _log);
+            if (_log)
+            {
+                string folder_name = DateTime.Now.Date.ToString("yyyy-MM-dd");
+                if (!Directory.Exists(folder_name))
+                    Directory.CreateDirectory(folder_name);
+                string fileNameFrequencies = folder_name+"/"+tag + " - Frequencies - " + DateTime.Now.Ticks+".csv";
+                ILog logFrequencies = new FileLog(new string[] { fileNameFrequencies });
+                string fileNameIndexes = folder_name + "/" + tag + " - Indexes - " + DateTime.Now.Ticks + ".csv";
+                ILog logIndexes = new FileLog(new string[] { fileNameIndexes });
+                string fileNameSlopes = folder_name + "/" + tag + " - Slopes - " + DateTime.Now.Ticks + ".csv";
+                ILog logSlopes = new FileLog(new string[] { fileNameSlopes });
 
-            handler = new WPFHandler(
-                CUC.PoorSignal,
-                SMBC.ChartValuesAlpha1,
-                SMBC.ChartValuesAlpha2,
-                SMBC.ChartValuesBeta1,
-                SMBC.ChartValuesBeta2,
-                SMBC.ChartValuesGamma1,
-                SMBC.ChartValuesGamma2,
-                SMBC.ChartValuesDelta,
-                SMBC.ChartValuesTheta,
-                SMBC.ChartValuesAttention,
-                SMBC.ChartValuesCreativity,
-                SMBC.ChartValuesImmersion,
-                SMBC.ChartValuesArousal,
-                SMBC.ChartValuesEngagement);
+                log = new Dictionary<string, ILog>();
+                log.Add("Frequencies", logFrequencies);
+                log.Add("Indexes", logIndexes);
+                log.Add("Slopes", logSlopes);
+
+                log["Frequencies"].Trace("timestamp,TG_DATA_ALPHA1,TG_DATA_ALPHA2,TG_DATA_BETA1,TG_DATA_BETA2,TG_DATA_GAMMA1,TG_DATA_GAMMA2,TG_DATA_DELTA,TG_DATA_THETA");
+                log["Indexes"].Trace("timestamp,attention,creativity,engagement,arousal,immersion");
+                log["Slopes"].Trace("timestamp,slopeThetaRelPower,slopeBetaLowRelPower,slopeAlphaHighRelPower,slopePower");
+            }
+
+            handler = new SMBCHandler(SMBC, CUC, SUC);
+            //handler = new WPFHandler(
+            //    CUC.PoorSignal,
+            //    SMBC.ChartValuesAlpha1,
+            //    SMBC.ChartValuesAlpha2,
+            //    SMBC.ChartValuesBeta1,
+            //    SMBC.ChartValuesBeta2,
+            //    SMBC.ChartValuesGamma1,
+            //    SMBC.ChartValuesGamma2,
+            //    SMBC.ChartValuesDelta,
+            //    SMBC.ChartValuesTheta,
+            //    SMBC.ChartValuesAttention,
+            //    SMBC.ChartValuesCreativity,
+            //    SMBC.ChartValuesImmersion,
+            //    SMBC.ChartValuesArousal,
+            //    SMBC.ChartValuesEngagement,
+            //    SMBC.ChartValuesSlopeTheta,
+            //    SMBC.ChartValuesSlopeBeta,
+            //    SMBC.ChartValuesSlopeAlpha,
+            //    SMBC.ChartValuesSlopePower);
 
             PSUC.PropertyChanged += PSUCChangedEventHandler;
             WUC.PropertyChanged += WUCChangedEventHandler;
@@ -100,8 +140,15 @@ namespace SetMyBrainWPFChart
 
             SMBC.visibility_limit = visibility_limit;
 
-            tokenSource = new CancellationTokenSource();
-            collector = new Collector(null, appSettings, connector, handler, tokenSource);
+            //tokenSource = new CancellationTokenSource();
+            collector = new Collector(
+                null, 
+                appSettings, 
+                connector, 
+                handler,
+                log
+                //,tokenSource
+                );
 
             IsReading = false;
 
@@ -769,6 +816,7 @@ namespace SetMyBrainWPFChart
             {
                 SMBC.ChartValuesAlpha1.Clear();
                 SMBC.ChartValuesAttention.Clear();
+                SMBC.ChartValuesSlopePower.Clear();
 
                 while (true)
                 {
@@ -786,10 +834,16 @@ namespace SetMyBrainWPFChart
                     if (SMBC.ChartValuesAttention.Count > visibility_limit)
                         SMBC.ChartValuesAttention.RemoveAt(0);
 
-                    float creativity = random.Next(0, 100);
-                    Dispatcher.Invoke(() => {
-                        ITFUC.SetMyBrainIndexes = new SetMyBrainIndexes(_dateTime, attention, creativity, 0, 0, 0);
-                    });
+                    float power = random.Next(0, 100);
+                    SMBC.SetMyBrainSlopes = new SetMyBrainSlopes(_dateTime, 0, 0, 0, power);
+                    SMBC.SetAxisXLimits(_dateTime);
+                    if (SMBC.ChartValuesSlopePower.Count > visibility_limit)
+                        SMBC.ChartValuesSlopePower.RemoveAt(0);
+
+                    //float creativity = random.Next(0, 100);
+                    //Dispatcher.Invoke(() => {
+                    //    ITFUC.SetMyBrainIndexes = new SetMyBrainIndexes(_dateTime, attention, creativity, 0, 0, 0);
+                    //});
 
                     float poor_signal = random.Next(0, 255);
 
@@ -858,6 +912,33 @@ namespace SetMyBrainWPFChart
             }
         }
 
+        private void MockReadHandler(CancellationToken token)
+        {
+            try
+            {
+                IHandler handler = new SMBCHandler(SMBC, CUC,SUC);
+                
+                
+                while (true)
+                {   
+                    DateTime _dateTime = DateTime.Now;
+                    float alpha1 = random.Next(0, 100);
+                    float poorSignal = random.Next(0, 255);
+                    NeuroskyFrequencies NeuroskyFrequencies = new NeuroskyFrequencies(_dateTime, alpha1, 0, 0, 0, 0, 0, 0, 0);
+                    handler.HandleFrequencies(NeuroskyFrequencies);
+                    handler.HandlePoorSignal(poorSignal);
+
+                    //SMBC.NeuroskyFrequencies = new NeuroskyFrequencies(_dateTime, alpha1, 0, 0, 0, 0, 0, 0, 0); // generates property changed
+
+                    Thread.Sleep(1000);
+                }
+            }
+            catch (OperationCanceledException)
+            {
+
+            }
+        }
+
         private void PSUCChangedEventHandler(object sender, PropertyChangedEventArgs e)
         {
             Task readTask;
@@ -869,9 +950,10 @@ namespace SetMyBrainWPFChart
 
                 IsReading = !IsReading;
                 if (startup == "mock")
-                    readTask = Task.Run(() => this.MockRead(tokenSource.Token), tokenSource.Token);
+                    //readTask = Task.Run(() => this.MockRead(tokenSource.Token), tokenSource.Token);
+                    readTask = Task.Run(() => this.MockReadHandler(tokenSource.Token), tokenSource.Token);
                 else
-                    readTask = Task.Run(() => collector.DoWork(), tokenSource.Token);
+                    readTask = Task.Run(() => collector.DoWorkAsync(tokenSource.Token), tokenSource.Token);
 
                 timeTask = Task.Run(() => this.StartStopTimeTask(tokenTimeUserControl.Token), tokenTimeUserControl.Token);
             }
@@ -928,5 +1010,6 @@ namespace SetMyBrainWPFChart
                     this.Opacity = 1;
             }
         }
+
     }
 }

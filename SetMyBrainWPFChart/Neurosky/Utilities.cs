@@ -1,4 +1,5 @@
 ﻿using AppSettings;
+using SetMyBrainWPFChart.Log;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -354,6 +355,121 @@ namespace SetMyBrainWPFChart.Neurosky
             //If Max_grossIndex_120sec > 0  (1 + Max_grossIndex_120sec) * 1.3
 
 
+        }
+
+        public static void SetSlopes(
+            ref float[] SlopeThetaRelPower,
+            ref float[] SlopeBetaLowRelPower, 
+            ref float[] SlopeAlphaHighRelPower,
+            ref float[] SlopePower,
+            float TG_DATA_ALPHA2,
+            float TG_DATA_BETA1,
+            float TG_DATA_DELTA,
+            float RelPower)
+        {
+            SlopeThetaRelPower = Utilities.PushElement(SlopeThetaRelPower, TG_DATA_DELTA / RelPower);
+            SlopeBetaLowRelPower = Utilities.PushElement(SlopeBetaLowRelPower, TG_DATA_BETA1 / RelPower);
+            SlopeAlphaHighRelPower = Utilities.PushElement(SlopeAlphaHighRelPower, TG_DATA_ALPHA2 / RelPower);
+            SlopePower = Utilities.PushElement(SlopePower, (TG_DATA_DELTA / RelPower + TG_DATA_ALPHA2 / RelPower + TG_DATA_BETA1 / RelPower) / RelPower);
+        }
+
+        public static float[] PushElement(float[] y,float _y)
+        {
+            var yList = y.ToList();
+            yList.RemoveAt(0);
+            yList.Add(_y);
+            return yList.ToArray();
+        }
+
+        public static bool InTheFlow(
+            float SlopeThetaRelPower,
+            float SlopeBetaLowRelPower,
+            float SlopeAlphaHighRelPower,
+            float SlopePower)
+        {
+            float soglia1 = 0.18F;
+            float soglia2 = 0.1F;
+
+            if (
+                ((SlopeThetaRelPower >= soglia1) && (SlopeAlphaHighRelPower >= soglia1) && (SlopeBetaLowRelPower >= soglia1))
+                &&
+                ((SlopeThetaRelPower >= 0) && (SlopeAlphaHighRelPower >= soglia1) && (SlopeBetaLowRelPower >= soglia1))
+                &&
+                ((SlopeThetaRelPower >= soglia1) && (SlopeAlphaHighRelPower >= 0) && (SlopeBetaLowRelPower >= soglia1))
+                &&
+                ((SlopeThetaRelPower >= soglia1) && (SlopeAlphaHighRelPower >= soglia1) && (SlopeBetaLowRelPower >= 0))
+                )
+                return true;
+
+            if (
+                ((SlopeThetaRelPower >= soglia1) && (SlopeAlphaHighRelPower >= 0) && (SlopeBetaLowRelPower >= 0) && (SlopePower > soglia2))
+                &&
+                ((SlopeThetaRelPower >= 0) && (SlopeAlphaHighRelPower >= soglia1) && (SlopeBetaLowRelPower >= 0) && (SlopePower > soglia2))
+                &&
+                ((SlopeThetaRelPower >= 0) && (SlopeAlphaHighRelPower >= 0) && (SlopeBetaLowRelPower >= soglia1) && (SlopePower > soglia2))
+                )
+                return true;
+
+            return false;
+        }
+
+        public static Task LogSlopesAsync(
+            Dictionary<string, ILog> log,
+            DateTime timestamp,
+            float slopeThetaRelPower,
+            float slopeBetaLowRelPower,
+            float slopeAlphaHighRelPower,
+            float slopePower)
+        {
+            if (log == null)
+                return null;
+
+            string message = timestamp.Ticks+","+
+                slopeThetaRelPower.ToString().Replace(',', '.') + "," +
+                slopeBetaLowRelPower.ToString().Replace(',', '.') + "," +
+                slopeAlphaHighRelPower.ToString().Replace(',', '.') + "," +
+                slopePower.ToString().Replace(',', '.');
+            return log["Slopes"].TraceAsync(message);
+        }
+
+        public static Task LogIndexesAsync(
+            Dictionary<string, ILog> log,
+            DateTime timestamp,
+            float attention,
+            float creativity,
+            float engagement,
+            float arousal,
+            float immersion)
+        {
+            if (log == null)
+                return null;
+
+            string message = timestamp.Ticks + "," +
+                attention.ToString().Replace(',', '.') + "," +
+                creativity.ToString().Replace(',', '.') + "," +
+                engagement.ToString().Replace(',', '.') + "," +
+                arousal.ToString().Replace(',', '.') + "," +
+                immersion.ToString().Replace(',', '.');
+            return log["Indexes"].TraceAsync(message);
+        }
+
+        public static Task LogFrequenciesAsync(
+            Dictionary<string, ILog> log,
+            DateTime timestamp,
+            float TG_DATA_ALPHA1,
+            float TG_DATA_ALPHA2,
+            float TG_DATA_BETA1,
+            float TG_DATA_BETA2,
+            float TG_DATA_GAMMA1,
+            float TG_DATA_GAMMA2,
+            float TG_DATA_DELTA,
+            float TG_DATA_THETA)
+        {
+            if (log == null)
+                return null;
+
+            string message = timestamp.Ticks + "," + TG_DATA_ALPHA1 + "," + TG_DATA_ALPHA2 + "," + TG_DATA_BETA1 + "," + TG_DATA_BETA2 + "," + TG_DATA_GAMMA1 +"," + TG_DATA_GAMMA2 + "," + TG_DATA_DELTA + "," + TG_DATA_THETA;
+            return log["Frequencies"].TraceAsync(message);
         }
     }
 }

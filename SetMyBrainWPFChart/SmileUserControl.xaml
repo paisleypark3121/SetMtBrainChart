@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:SetMyBrainWPFChart"
              mc:Ignorable="d" 
-             d:DesignHeight="80" d:DesignWidth="300"
+             d:DesignHeight="50"
              x:Name="SmileUC">
     <UserControl.Resources>
         <BooleanToVisibilityConverter x:Key="bvc"></BooleanToVisibilityConverter>
@@ -13,14 +13,14 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"></RowDefinition>
-            <RowDefinition Height="Auto"></RowDefinition>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*"></ColumnDefinition>
             <ColumnDefinition Width="1*"></ColumnDefinition>
             <ColumnDefinition Width="1*"></ColumnDefinition>
             <ColumnDefinition Width="1*"></ColumnDefinition>
-            <ColumnDefinition Width="1*"></ColumnDefinition>            
+            <ColumnDefinition Width="1*"></ColumnDefinition>
+            <ColumnDefinition Width="3*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <Image x:Name="RedValue" Grid.Row="0" Grid.Column="0" Width="50" Height="50" Source="/img/red.jpg" Visibility="{Binding RedValueVisibility, Converter={StaticResource bvc}}" />
         <Image x:Name="OrangeValue" Grid.Row="0" Grid.Column="1" Width="50" Height="50" Source="/img/orange.jpg" Visibility="{Binding OrangeValueVisibility, Converter={StaticResource bvc}}" />
@@ -29,7 +29,7 @@
         <Image x:Name="Green2Value" Grid.Row="0" Grid.Column="4" Width="50" Height="50" Source="/img/green2.jpg" Visibility="{Binding Green2ValueVisibility, Converter={StaticResource bvc}}" />
         <TextBlock 
             x:Name="SmileValue"
-            Grid.Row="1" Grid.ColumnSpan="5" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16" 
+            Grid.Row="0" Grid.Column="5" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16" 
             Text="{Binding ElementName=SmileUC, Path=SmileIndexValue}" />
     </Grid>
 </UserControl>

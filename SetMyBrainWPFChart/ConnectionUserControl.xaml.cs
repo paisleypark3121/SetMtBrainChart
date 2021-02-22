@@ -21,39 +21,38 @@ namespace SetMyBrainWPFChart
     /// </summary>
     public partial class ConnectionUserControl : UserControl, INotifyPropertyChanged
     {
+        private float _poorSignal;
+        
         public float PoorSignal
         {
-            get { return (float)GetValue(PoorSignalProperty); }
+            get { return _poorSignal; }
             set
             {
-                SetValue(PoorSignalProperty, value);
+                _poorSignal = value;
+                OnPropertyChanged("PoorSignalChanged");
 
-                if (PoorSignal == 200)
-                {
-                    Label = "NO CONNECTION";
-                    Color = "#FF0000";
-                }
-                else if (PoorSignal > 200)
-                {
-                    Label = "Connected";
-                    Color = "#32CD32";
-                }
-                else if (PoorSignal > 100)
-                {
-                    Label = "Poor Connection";
-                    Color = "#FFFF00";
-                }
-                else
-                {
-                    Label = "Not Connected";
-                    Color = "#FF0000";
-                }
+                //if (value == 200)
+                //{
+                //    Label = "NO CONNECTION";
+                //    Color = "#FF0000";
+                //}
+                //else if (value > 200)
+                //{
+                //    Label = "Connected";
+                //    Color = "#32CD32";
+                //}
+                //else if (value > 100)
+                //{
+                //    Label = "Poor Connection";
+                //    Color = "#FFFF00";
+                //}
+                //else
+                //{
+                //    Label = "Not Connected";
+                //    Color = "#FF0000";
+                //}
             }
         }
-
-        // Using a DependencyProperty as the backing store for PoorSignal.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty PoorSignalProperty =
-            DependencyProperty.Register("PoorSignal", typeof(float), typeof(ConnectionUserControl), new PropertyMetadata(default(float)));
 
         public string Color
         {
@@ -61,7 +60,6 @@ namespace SetMyBrainWPFChart
             set { SetValue(ColorProperty, value); }
         }
 
-        // Using a DependencyProperty as the backing store for Color.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty ColorProperty =
             DependencyProperty.Register("Color", typeof(string), typeof(ConnectionUserControl), new PropertyMetadata(default(string)));
 
@@ -71,17 +69,8 @@ namespace SetMyBrainWPFChart
             set { SetValue(LabelProperty, value); }
         }
 
-        // Using a DependencyProperty as the backing store for MyProperty.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty LabelProperty =
             DependencyProperty.Register("Label", typeof(string), typeof(ConnectionUserControl), new PropertyMetadata(default(string)));
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        protected virtual void OnPropertyChanged(string propertyName = null)
-        {
-            if (PropertyChanged != null)
-                PropertyChanged.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
 
         public ConnectionUserControl()
         {
@@ -93,7 +82,51 @@ namespace SetMyBrainWPFChart
             Color = "#FF0000";
             Label = "Not Connected";
 
+            this.PropertyChanged += ColorAndLabelChange;
+
             DataContext = this;
         }
+
+        private void ColorAndLabelChange(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == "PoorSignalChanged")
+            {
+                if (_poorSignal == 200)
+                {
+                    Label = "NO CONNECTION";
+                    Color = "#FF0000";
+                }
+                else if (_poorSignal < 30)
+                {
+                    Label = "Connected";
+                    Color = "#32CD32";
+                }
+                else if (_poorSignal < 120)
+                {
+                    Label = "Poor Connection";
+                    Color = "#FFFF00";
+                }
+                else if (_poorSignal < 160)
+                {
+                    Label = "Very Poor Connection";
+                    Color = "#FFFF00";
+                }
+                else
+                {
+                    Label = "Not Connected";
+                    Color = "#FF0000";
+                }
+            }
+        }
+
+        #region INotifyPropertyChanged implementation
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected virtual void OnPropertyChanged(string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+        #endregion
     }
 }

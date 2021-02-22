@@ -21,6 +21,17 @@ namespace SetMyBrainWPFChart
     /// </summary>
     public partial class SmileUserControl : UserControl, INotifyPropertyChanged
     {
+        private bool _flow;
+        public bool Flow
+        {
+            get { return _flow; }
+            set
+            {
+                _flow = value;
+                OnPropertyChanged("FlowChanged");
+            }
+        }
+
         public string SmileIndexValue
         {
             get { return (string)GetValue(SmileIndexValueProperty); }
@@ -96,7 +107,34 @@ namespace SetMyBrainWPFChart
 
             SmileIndexValue = "Index: 0";
 
+            this.PropertyChanged += SmileChange;
+
             DataContext = this;
+        }
+
+        private void SmileChange(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == "FlowChanged")
+            {
+                if (_flow == true)
+                {
+                    RedValueVisibility = false;
+                    OrangeValueVisibility = false;
+                    YellowValueVisibility = false;
+                    GreenValueVisibility = false;
+                    Green2ValueVisibility = true;
+                    SmileIndexValue = "In the flow!";
+                }
+                else 
+                {
+                    RedValueVisibility = true;
+                    OrangeValueVisibility = false;
+                    YellowValueVisibility = false;
+                    GreenValueVisibility = false;
+                    Green2ValueVisibility = false;
+                    SmileIndexValue = "Non yet in the flow...";
+                }
+            }
         }
 
         #region INotifyPropertyChanged implementation

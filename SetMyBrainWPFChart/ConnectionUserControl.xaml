@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:SetMyBrainWPFChart"
+             x:Name="localCUC"
              mc:Ignorable="d" Height="60" Width="150">
     <Grid Margin="0,0,0,0">
         <Ellipse

@@ -41,6 +41,10 @@ namespace SetMyBrainWPFChart
         private bool _immersionSeriesVisibility;
         private bool _arousalSeriesVisibility;
         private bool _engagementSeriesVisibility;
+        private bool _slopeThetaSeriesVisibility;
+        private bool _slopeBetaSeriesVisibility;
+        private bool _slopeAlphaSeriesVisibility;
+        private bool _slopePowerSeriesVisibility;
 
         public bool Alpha1SeriesVisibility
         {
@@ -160,6 +164,46 @@ namespace SetMyBrainWPFChart
                 OnPropertyChanged("EngagementSeriesVisibility");
             }
         }
+
+        public bool SlopeThetaSeriesVisibility
+        {
+            get { return _slopeThetaSeriesVisibility; }
+            set
+            {
+                _slopeThetaSeriesVisibility = value;
+                OnPropertyChanged("SlopeThetaSeriesVisibility");
+            }
+        }
+
+        public bool SlopeBetaSeriesVisibility
+        {
+            get { return _slopeBetaSeriesVisibility; }
+            set
+            {
+                _slopeBetaSeriesVisibility = value;
+                OnPropertyChanged("SlopeBetaSeriesVisibility");
+            }
+        }
+
+        public bool SlopeAlphaSeriesVisibility
+        {
+            get { return _slopeAlphaSeriesVisibility; }
+            set
+            {
+                _slopeAlphaSeriesVisibility = value;
+                OnPropertyChanged("SlopeAlphaSeriesVisibility");
+            }
+        }
+
+        public bool SlopePowerSeriesVisibility
+        {
+            get { return _slopePowerSeriesVisibility; }
+            set
+            {
+                _slopePowerSeriesVisibility = value;
+                OnPropertyChanged("SlopePowerSeriesVisibility");
+            }
+        }
         #endregion
 
         #region axis
@@ -236,6 +280,13 @@ namespace SetMyBrainWPFChart
             get { return _setMyBrainIndexes; }
             set { _setMyBrainIndexes = value; OnPropertyChanged("SetMyBrainIndexes"); }
         }
+
+        private SetMyBrainSlopes _setMyBrainSlopes;
+        public SetMyBrainSlopes SetMyBrainSlopes
+        {
+            get { return _setMyBrainSlopes; }
+            set { _setMyBrainSlopes = value; OnPropertyChanged("SetMyBrainSlopes"); }
+        }
         #endregion
 
         #region chartValues
@@ -252,6 +303,10 @@ namespace SetMyBrainWPFChart
         public ChartValues<DateChartModel> ChartValuesImmersion { get; set; }
         public ChartValues<DateChartModel> ChartValuesArousal { get; set; }
         public ChartValues<DateChartModel> ChartValuesEngagement { get; set; }
+        public ChartValues<DateChartModel> ChartValuesSlopeTheta { get; set; }
+        public ChartValues<DateChartModel> ChartValuesSlopeBeta { get; set; }
+        public ChartValues<DateChartModel> ChartValuesSlopeAlpha { get; set; }
+        public ChartValues<DateChartModel> ChartValuesSlopePower { get; set; }
         #endregion
 
         public SetMyBrainChart()
@@ -279,13 +334,19 @@ namespace SetMyBrainWPFChart
             ChartValuesArousal = new ChartValues<DateChartModel>();
             ChartValuesEngagement = new ChartValues<DateChartModel>();
 
+            ChartValuesSlopeTheta = new ChartValues<DateChartModel>();
+            ChartValuesSlopeAlpha = new ChartValues<DateChartModel>();
+            ChartValuesSlopeBeta = new ChartValues<DateChartModel>();
+            ChartValuesSlopePower = new ChartValues<DateChartModel>();
+
             DateTimeFormatter = value => new DateTime((long)value).ToString("mm:ss");
 
             AxisXStep = TimeSpan.FromSeconds(1).Ticks;
             AxisXUnit = TimeSpan.TicksPerSecond;
 
             SetAxisXLimits(DateTime.Now);
-            SetAxisYLimits(0, 100);
+            //SetAxisYLimits(0, 100);
+            SetAxisYLimits(-1000, 10000);
 
             _alpha1SeriesVisibility = true;
             _alpha2SeriesVisibility = true;
@@ -302,41 +363,19 @@ namespace SetMyBrainWPFChart
             _arousalSeriesVisibility = true;
             _engagementSeriesVisibility = true;
 
+            _slopeThetaSeriesVisibility = true;
+            _slopeBetaSeriesVisibility = true;
+            _slopeAlphaSeriesVisibility = true;
+            _slopePowerSeriesVisibility = true;
+
             this.PropertyChanged += FrequenciesView;
             this.PropertyChanged += IndexesView;
+            this.PropertyChanged += SlopesView;
 
             DataContext = this;
         }
 
         #region event handler
-        private void SetIndexes()
-        {
-            ChartValuesAttention.Add(new DateChartModel
-            {
-                DateTime = SetMyBrainIndexes.timestamp,
-                Value = SetMyBrainIndexes.attention
-            });
-            ChartValuesCreativity.Add(new DateChartModel
-            {
-                DateTime = SetMyBrainIndexes.timestamp,
-                Value = SetMyBrainIndexes.creativity
-            });
-            ChartValuesImmersion.Add(new DateChartModel
-            {
-                DateTime = SetMyBrainIndexes.timestamp,
-                Value = SetMyBrainIndexes.immersion
-            });
-            ChartValuesArousal.Add(new DateChartModel
-            {
-                DateTime = SetMyBrainIndexes.timestamp,
-                Value = SetMyBrainIndexes.arousal
-            });
-            ChartValuesEngagement.Add(new DateChartModel
-            {
-                DateTime = SetMyBrainIndexes.timestamp,
-                Value = SetMyBrainIndexes.engagement
-            });
-        }
         private void SetFrequencies()
         {
             ChartValuesAlpha1.Add(new DateChartModel
@@ -412,6 +451,35 @@ namespace SetMyBrainWPFChart
                 ChartValuesTheta.RemoveAt(0);
         }
 
+        private void SetIndexes()
+        {
+            ChartValuesAttention.Add(new DateChartModel
+            {
+                DateTime = SetMyBrainIndexes.timestamp,
+                Value = SetMyBrainIndexes.attention
+            });
+            ChartValuesCreativity.Add(new DateChartModel
+            {
+                DateTime = SetMyBrainIndexes.timestamp,
+                Value = SetMyBrainIndexes.creativity
+            });
+            ChartValuesImmersion.Add(new DateChartModel
+            {
+                DateTime = SetMyBrainIndexes.timestamp,
+                Value = SetMyBrainIndexes.immersion
+            });
+            ChartValuesArousal.Add(new DateChartModel
+            {
+                DateTime = SetMyBrainIndexes.timestamp,
+                Value = SetMyBrainIndexes.arousal
+            });
+            ChartValuesEngagement.Add(new DateChartModel
+            {
+                DateTime = SetMyBrainIndexes.timestamp,
+                Value = SetMyBrainIndexes.engagement
+            });
+        }
+
         private void IndexesView(object sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == "SetMyBrainIndexes")
@@ -435,6 +503,53 @@ namespace SetMyBrainWPFChart
                 ChartValuesArousal.RemoveAt(0);
             if (ChartValuesEngagement.Count > visibility_limit)
                 ChartValuesEngagement.RemoveAt(0);
+        }
+
+        private void SetSlopes()
+        {
+            ChartValuesSlopeTheta.Add(new DateChartModel
+            {
+                DateTime = SetMyBrainSlopes.timestamp,
+                Value = SetMyBrainSlopes.theta
+            });
+            ChartValuesSlopeBeta.Add(new DateChartModel
+            {
+                DateTime = SetMyBrainSlopes.timestamp,
+                Value = SetMyBrainSlopes.beta
+            });
+            ChartValuesSlopeAlpha.Add(new DateChartModel
+            {
+                DateTime = SetMyBrainSlopes.timestamp,
+                Value = SetMyBrainSlopes.alpha
+            });
+            ChartValuesSlopePower.Add(new DateChartModel
+            {
+                DateTime = SetMyBrainSlopes.timestamp,
+                Value = SetMyBrainSlopes.power
+            });
+        }
+
+        private void SlopesView(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == "SetMyBrainSlopes")
+            {
+                SetSlopes();
+                SetSlopesVisibility();
+            }
+        }
+
+        private void SetSlopesVisibility()
+        {
+            SetAxisXLimits(SetMyBrainSlopes.timestamp);
+
+            if (ChartValuesSlopeTheta.Count > visibility_limit)
+                ChartValuesSlopeTheta.RemoveAt(0);
+            if (ChartValuesSlopeBeta.Count > visibility_limit)
+                ChartValuesSlopeBeta.RemoveAt(0);
+            if (ChartValuesSlopeAlpha.Count > visibility_limit)
+                ChartValuesSlopeAlpha.RemoveAt(0);
+            if (ChartValuesSlopePower.Count > visibility_limit)
+                ChartValuesSlopePower.RemoveAt(0);
         }
         #endregion
 

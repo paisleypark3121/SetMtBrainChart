@@ -492,14 +492,14 @@ namespace SetMyBrainWPFChart
                                 (TG_DATA_THETA != 0))
                             {
                                 stopWatch_baseline.Start();
-                                float RelPower = Utilities.RelPower(TG_DATA_ALPHA1, TG_DATA_ALPHA2, TG_DATA_BETA1, TG_DATA_BETA2, TG_DATA_DELTA, TG_DATA_GAMMA1, TG_DATA_GAMMA2, TG_DATA_THETA);
+                                float RelPower = Neurosky.Utilities.RelPower(TG_DATA_ALPHA1, TG_DATA_ALPHA2, TG_DATA_BETA1, TG_DATA_BETA2, TG_DATA_DELTA, TG_DATA_GAMMA1, TG_DATA_GAMMA2, TG_DATA_THETA);
                                 previous_b = RelPower;
 
-                                attention_30[slider] = Utilities.Attention(TG_DATA_THETA, TG_DATA_ALPHA1, TG_DATA_ALPHA2);
-                                creativity_30[slider] = Utilities.Creativity(TG_DATA_ALPHA2, RelPower);
-                                engagement_30[slider] = Utilities.Engagement(TG_DATA_BETA1, TG_DATA_BETA2, TG_DATA_ALPHA1, TG_DATA_ALPHA2, TG_DATA_THETA);
-                                arousal_30[slider] = Utilities.Arousal(TG_DATA_BETA1, TG_DATA_BETA2, TG_DATA_ALPHA1, TG_DATA_ALPHA2);
-                                immersion_30[slider] = Utilities.Immersion(TG_DATA_THETA, TG_DATA_ALPHA1, TG_DATA_ALPHA2);
+                                attention_30[slider] = Neurosky.Utilities.Attention(TG_DATA_THETA, TG_DATA_ALPHA1, TG_DATA_ALPHA2);
+                                creativity_30[slider] = Neurosky.Utilities.Creativity(TG_DATA_ALPHA2, RelPower);
+                                engagement_30[slider] = Neurosky.Utilities.Engagement(TG_DATA_BETA1, TG_DATA_BETA2, TG_DATA_ALPHA1, TG_DATA_ALPHA2, TG_DATA_THETA);
+                                arousal_30[slider] = Neurosky.Utilities.Arousal(TG_DATA_BETA1, TG_DATA_BETA2, TG_DATA_ALPHA1, TG_DATA_ALPHA2);
+                                immersion_30[slider] = Neurosky.Utilities.Immersion(TG_DATA_THETA, TG_DATA_ALPHA1, TG_DATA_ALPHA2);
 
                                 slider++;
                             }
@@ -524,7 +524,7 @@ namespace SetMyBrainWPFChart
                             #endregion
 
                             #region grossindex - min / max
-                            Utilities.SetMinMax(
+                            Neurosky.Utilities.SetMinMax(
                                 AVG_attention_180,
                                 VAR_attention_180,
                                 baseline_attention_avg,
@@ -533,7 +533,7 @@ namespace SetMyBrainWPFChart
                                 slider_limit,
                                 ref min_grossIndex_attention,
                                 ref max_grossIndex_attention);
-                            Utilities.SetMinMax(
+                            Neurosky.Utilities.SetMinMax(
                                 AVG_creativity_180,
                                 VAR_creativity_180,
                                 baseline_creativity_avg,
@@ -542,7 +542,7 @@ namespace SetMyBrainWPFChart
                                 slider_limit,
                                 ref min_grossIndex_creativity,
                                 ref max_grossIndex_creativity);
-                            Utilities.SetMinMax(
+                            Neurosky.Utilities.SetMinMax(
                                 AVG_engagement_180,
                                 VAR_engagement_180,
                                 baseline_engagement_avg,
@@ -551,7 +551,7 @@ namespace SetMyBrainWPFChart
                                 slider_limit,
                                 ref min_grossIndex_engagement,
                                 ref max_grossIndex_engagement);
-                            Utilities.SetMinMax(
+                            Neurosky.Utilities.SetMinMax(
                                 AVG_arousal_180,
                                 VAR_arousal_180,
                                 baseline_arousal_avg,
@@ -560,7 +560,7 @@ namespace SetMyBrainWPFChart
                                 slider_limit,
                                 ref min_grossIndex_arousal,
                                 ref max_grossIndex_arousal);
-                            Utilities.SetMinMax(
+                            Neurosky.Utilities.SetMinMax(
                                 AVG_immersion_180,
                                 VAR_immersion_180,
                                 baseline_immersion_avg,
@@ -579,7 +579,7 @@ namespace SetMyBrainWPFChart
                         #region running
                         else
                         {
-                            float RelPower = Utilities.RelPower(TG_DATA_ALPHA1, TG_DATA_ALPHA2, TG_DATA_BETA1, TG_DATA_BETA2, TG_DATA_DELTA, TG_DATA_GAMMA1, TG_DATA_GAMMA2, TG_DATA_THETA);
+                            float RelPower = Neurosky.Utilities.RelPower(TG_DATA_ALPHA1, TG_DATA_ALPHA2, TG_DATA_BETA1, TG_DATA_BETA2, TG_DATA_DELTA, TG_DATA_GAMMA1, TG_DATA_GAMMA2, TG_DATA_THETA);
 
                             #region not valid data
                             if (previous_b == RelPower)
@@ -642,11 +642,11 @@ namespace SetMyBrainWPFChart
 
                                 previous_b = RelPower;
 
-                                attention_30[slider] = Utilities.Attention(TG_DATA_THETA, TG_DATA_ALPHA1, TG_DATA_ALPHA2);
-                                creativity_30[slider] = Utilities.Creativity(TG_DATA_ALPHA2, RelPower);
-                                engagement_30[slider] = Utilities.Engagement(TG_DATA_BETA1, TG_DATA_BETA2, TG_DATA_ALPHA1, TG_DATA_ALPHA2, TG_DATA_THETA);
-                                arousal_30[slider] = Utilities.Arousal(TG_DATA_BETA1, TG_DATA_BETA2, TG_DATA_ALPHA1, TG_DATA_ALPHA2);
-                                immersion_30[slider] = Utilities.Immersion(TG_DATA_THETA, TG_DATA_ALPHA1, TG_DATA_ALPHA2);
+                                attention_30[slider] = Neurosky.Utilities.Attention(TG_DATA_THETA, TG_DATA_ALPHA1, TG_DATA_ALPHA2);
+                                creativity_30[slider] = Neurosky.Utilities.Creativity(TG_DATA_ALPHA2, RelPower);
+                                engagement_30[slider] = Neurosky.Utilities.Engagement(TG_DATA_BETA1, TG_DATA_BETA2, TG_DATA_ALPHA1, TG_DATA_ALPHA2, TG_DATA_THETA);
+                                arousal_30[slider] = Neurosky.Utilities.Arousal(TG_DATA_BETA1, TG_DATA_BETA2, TG_DATA_ALPHA1, TG_DATA_ALPHA2);
+                                immersion_30[slider] = Neurosky.Utilities.Immersion(TG_DATA_THETA, TG_DATA_ALPHA1, TG_DATA_ALPHA2);
 
                                 slider++;
 
@@ -708,7 +708,7 @@ namespace SetMyBrainWPFChart
                     else
                     {
                         #region not valid data
-                        if (Utilities.AreEqual(previous,
+                        if (Neurosky.Utilities.AreEqual(previous,
                             _datetime,
                             TG_DATA_RAW,
                             TG_DATA_ALPHA1,
@@ -778,13 +778,13 @@ namespace SetMyBrainWPFChart
 
                             #region new parameters
 
-                            float RelPower = Utilities.RelPower(TG_DATA_ALPHA1, TG_DATA_ALPHA2, TG_DATA_BETA1, TG_DATA_BETA2, TG_DATA_DELTA, TG_DATA_GAMMA1, TG_DATA_GAMMA2, TG_DATA_THETA);
+                            float RelPower = Neurosky.Utilities.RelPower(TG_DATA_ALPHA1, TG_DATA_ALPHA2, TG_DATA_BETA1, TG_DATA_BETA2, TG_DATA_DELTA, TG_DATA_GAMMA1, TG_DATA_GAMMA2, TG_DATA_THETA);
 
-                            attention_30[slider] = Utilities.Attention(TG_DATA_THETA, TG_DATA_ALPHA1, TG_DATA_ALPHA2);
-                            creativity_30[slider] = Utilities.Creativity(TG_DATA_ALPHA2, RelPower);
-                            engagement_30[slider] = Utilities.Engagement(TG_DATA_BETA1, TG_DATA_BETA2, TG_DATA_ALPHA1, TG_DATA_ALPHA2, TG_DATA_THETA);
-                            arousal_30[slider] = Utilities.Arousal(TG_DATA_BETA1, TG_DATA_BETA2, TG_DATA_ALPHA1, TG_DATA_ALPHA2);
-                            immersion_30[slider] = Utilities.Immersion(TG_DATA_THETA, TG_DATA_ALPHA1, TG_DATA_ALPHA2);
+                            attention_30[slider] = Neurosky.Utilities.Attention(TG_DATA_THETA, TG_DATA_ALPHA1, TG_DATA_ALPHA2);
+                            creativity_30[slider] = Neurosky.Utilities.Creativity(TG_DATA_ALPHA2, RelPower);
+                            engagement_30[slider] = Neurosky.Utilities.Engagement(TG_DATA_BETA1, TG_DATA_BETA2, TG_DATA_ALPHA1, TG_DATA_ALPHA2, TG_DATA_THETA);
+                            arousal_30[slider] = Neurosky.Utilities.Arousal(TG_DATA_BETA1, TG_DATA_BETA2, TG_DATA_ALPHA1, TG_DATA_ALPHA2);
+                            immersion_30[slider] = Neurosky.Utilities.Immersion(TG_DATA_THETA, TG_DATA_ALPHA1, TG_DATA_ALPHA2);
 
                             M_attention_30[slider] = Statistics.Utilities.Median(attention_30);
                             M_creativity_30[slider] = Statistics.Utilities.Median(creativity_30);
@@ -797,32 +797,32 @@ namespace SetMyBrainWPFChart
                             if (slider == slider_limit)
                                 slider = 0;
 
-                            float grossIndex_attention = Utilities.grossIndex(
+                            float grossIndex_attention = Neurosky.Utilities.grossIndex(
                                 M_attention_30.Average(),
                                 Statistics.Utilities.Variance(M_attention_30),
                                 slider_limit, baseline_attention_avg, baseline_attention_var, baseline_slider_limit);
-                            float grossIndex_creativity = Utilities.grossIndex(
+                            float grossIndex_creativity = Neurosky.Utilities.grossIndex(
                                 M_creativity_30.Average(),
                                 Statistics.Utilities.Variance(M_creativity_30),
                                 slider_limit, baseline_creativity_avg, baseline_creativity_var, baseline_slider_limit);
-                            float grossIndex_engagement = Utilities.grossIndex(
+                            float grossIndex_engagement = Neurosky.Utilities.grossIndex(
                                 M_engagement_30.Average(),
                                 Statistics.Utilities.Variance(M_engagement_30),
                                 slider_limit, baseline_engagement_avg, baseline_engagement_var, baseline_slider_limit);
-                            float grossIndex_arousal = Utilities.grossIndex(
+                            float grossIndex_arousal = Neurosky.Utilities.grossIndex(
                                 M_arousal_30.Average(),
                                 Statistics.Utilities.Variance(M_arousal_30),
                                 slider_limit, baseline_arousal_avg, baseline_arousal_var, baseline_slider_limit);
-                            float grossIndex_immersion = Utilities.grossIndex(
+                            float grossIndex_immersion = Neurosky.Utilities.grossIndex(
                                 M_immersion_30.Average(),
                                 Statistics.Utilities.Variance(M_immersion_30),
                                 slider_limit, baseline_immersion_avg, baseline_immersion_var, baseline_slider_limit);
 
-                            float grossIndex_attention_normalized = Utilities.grossIndexNormalized(grossIndex_attention, min_grossIndex_attention, max_grossIndex_attention);
-                            float grossIndex_creativity_normalized = Utilities.grossIndexNormalized(grossIndex_creativity, min_grossIndex_creativity, max_grossIndex_creativity);
-                            float grossIndex_engagement_normalized = Utilities.grossIndexNormalized(grossIndex_engagement, min_grossIndex_engagement, max_grossIndex_engagement);
-                            float grossIndex_arousal_normalized = Utilities.grossIndexNormalized(grossIndex_arousal, min_grossIndex_arousal, max_grossIndex_arousal);
-                            float grossIndex_immersion_normalized = Utilities.grossIndexNormalized(grossIndex_immersion, min_grossIndex_immersion, max_grossIndex_immersion);
+                            float grossIndex_attention_normalized = Neurosky.Utilities.grossIndexNormalized(grossIndex_attention, min_grossIndex_attention, max_grossIndex_attention);
+                            float grossIndex_creativity_normalized = Neurosky.Utilities.grossIndexNormalized(grossIndex_creativity, min_grossIndex_creativity, max_grossIndex_creativity);
+                            float grossIndex_engagement_normalized = Neurosky.Utilities.grossIndexNormalized(grossIndex_engagement, min_grossIndex_engagement, max_grossIndex_engagement);
+                            float grossIndex_arousal_normalized = Neurosky.Utilities.grossIndexNormalized(grossIndex_arousal, min_grossIndex_arousal, max_grossIndex_arousal);
+                            float grossIndex_immersion_normalized = Neurosky.Utilities.grossIndexNormalized(grossIndex_immersion, min_grossIndex_immersion, max_grossIndex_immersion);
 
                             #endregion
 

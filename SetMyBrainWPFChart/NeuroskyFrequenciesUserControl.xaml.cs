@@ -217,6 +217,7 @@ namespace SetMyBrainWPFChart
 
             SetAxisXLimits(DateTime.Now);
             SetAxisYLimits(0, 100);
+            //SetAxisYLimits(-1000, 10000);
 
             _alpha1SeriesVisibility = true;
             _alpha2SeriesVisibility = true;

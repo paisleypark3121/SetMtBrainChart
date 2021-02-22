@@ -56,26 +56,26 @@ namespace SetMyBrainWPFChart
             connector.Connect();
             visibility_limit = int.Parse(appSettings["visibility_limit"]);
 
-            handler = new WPFHandler(
-                0,
-                NFUC.ChartValuesAlpha1,
-                NFUC.ChartValuesAlpha2,
-                NFUC.ChartValuesBeta1,
-                NFUC.ChartValuesBeta2,
-                NFUC.ChartValuesGamma1,
-                NFUC.ChartValuesGamma2,
-                NFUC.ChartValuesDelta,
-                NFUC.ChartValuesTheta,
-                SMBIUC.ChartValuesAttention,
-                SMBIUC.ChartValuesCreativity,
-                SMBIUC.ChartValuesImmersion,
-                SMBIUC.ChartValuesArousal,
-                SMBIUC.ChartValuesEngagement);
+            //handler = new WPFHandler(
+            //    0,
+            //    NFUC.ChartValuesAlpha1,
+            //    NFUC.ChartValuesAlpha2,
+            //    NFUC.ChartValuesBeta1,
+            //    NFUC.ChartValuesBeta2,
+            //    NFUC.ChartValuesGamma1,
+            //    NFUC.ChartValuesGamma2,
+            //    NFUC.ChartValuesDelta,
+            //    NFUC.ChartValuesTheta,
+            //    SMBIUC.ChartValuesAttention,
+            //    SMBIUC.ChartValuesCreativity,
+            //    SMBIUC.ChartValuesImmersion,
+            //    SMBIUC.ChartValuesArousal,
+            //    SMBIUC.ChartValuesEngagement);
 
-            NFUC.visibility_limit = visibility_limit;
+            //NFUC.visibility_limit = visibility_limit;
 
-            tokenSource = new CancellationTokenSource();
-            collector = new Collector(null, appSettings, connector, handler, tokenSource);
+            //tokenSource = new CancellationTokenSource();
+            //collector = new Collector(null, appSettings, connector, handler, tokenSource);
 
             IsReading = false;
         }
