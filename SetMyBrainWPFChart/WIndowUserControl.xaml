@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:SetMyBrainWPFChart"
-             mc:Ignorable="d" Height="35" Width="100">
+             mc:Ignorable="d" Height="60" Width="90">
     <UserControl.Resources>
         <Style x:Key="NoChromeButton" TargetType="{x:Type Button}">
             <Setter Property="Background" Value="Transparent"/>
@@ -31,6 +31,10 @@
         </Style>
     </UserControl.Resources>
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*"></ColumnDefinition>
             <ColumnDefinition Width="1*"></ColumnDefinition>
@@ -38,19 +42,31 @@
             <ColumnDefinition Width="1*"></ColumnDefinition>
             <ColumnDefinition Width="1*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
-        <Button Style="{DynamicResource NoChromeButton}" Grid.Column="0" Click="Move_Click" >
+        <Button Style="{DynamicResource NoChromeButton}" Grid.Row="1" Grid.Column="1" Click="UP_Click" >
+            <Image Source="/img/UP.png" />
+        </Button>
+        <Button Style="{DynamicResource NoChromeButton}" Grid.Row="1" Grid.Column="2" Click="DOWN_Click" >
+            <Image Source="/img/DOWN.png" />
+        </Button>
+        <Button Style="{DynamicResource NoChromeButton}" Grid.Row="1" Grid.Column="3" Click="LEFT_Click" >
+            <Image Source="/img/LEFT.png" />
+        </Button>
+        <Button Style="{DynamicResource NoChromeButton}" Grid.Row="1" Grid.Column="4" Click="RIGHT_Click" >
+            <Image Source="/img/RIGHT.png" />
+        </Button>
+        <Button Style="{DynamicResource NoChromeButton}" Grid.Row="0" Grid.Column="0" Click="Move_Click" >
             <Image Source="/img/move.png" />
         </Button>
-        <Button Style="{DynamicResource NoChromeButton}" Grid.Column="1" Click="Opacity_Click" >
+        <Button Style="{DynamicResource NoChromeButton}" Grid.Row="0" Grid.Column="1" Click="Opacity_Click" >
             <Image Source="/img/opacity.png" />
         </Button>
-        <Button Style="{DynamicResource NoChromeButton}" Grid.Column="2" Click="Anchor_Click" >
+        <Button Style="{DynamicResource NoChromeButton}" Grid.Row="0" Grid.Column="2" Click="Anchor_Click" >
             <Image Source="/img/anchor.png" />
         </Button>
-        <Button Style="{DynamicResource NoChromeButton}" Grid.Column="3" Click="Minimize_Click" >
+        <Button Style="{DynamicResource NoChromeButton}" Grid.Row="0" Grid.Column="3" Click="Minimize_Click" >
             <Image Source="/img/minimize.png" />
         </Button>
-        <Button Style="{DynamicResource NoChromeButton}" Grid.Column="4" Click="Close_Click" >
+        <Button Style="{DynamicResource NoChromeButton}" Grid.Column="8" Click="Close_Click" >
             <Image Source="/img/close.png" />
         </Button>
     </Grid>

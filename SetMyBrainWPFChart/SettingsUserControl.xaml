@@ -7,7 +7,7 @@
              mc:Ignorable="d" Height="106.653" Width="222.123">
     <Grid>
         <Image Source="/img/settings.png" HorizontalAlignment="Right" Grid.RowSpan="2" />
-        <TextBlock TextWrapping="Wrap" Text="Options" FontSize="14" FontFamily="Century Gothic" HorizontalAlignment="Left" VerticalAlignment="Center" />
+        <TextBlock TextWrapping="Wrap" Text="Options" FontSize="12" FontFamily="Century Gothic" HorizontalAlignment="Left" VerticalAlignment="Center" />
 
     </Grid>
 </UserControl>

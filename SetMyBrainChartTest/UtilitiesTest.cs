@@ -2,9 +2,11 @@
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Specialized;
+using System.Diagnostics;
 using System.IO;
 using System.Net;
 using System.Text;
+using System.Threading;
 using System.Web;
 
 namespace SetMyBrainChartTest
@@ -12,6 +14,24 @@ namespace SetMyBrainChartTest
     [TestClass]
     public class UtilitiesTest
     {
+        [TestMethod]
+        public void StopWatchModTest()
+        {
+            Stopwatch sw = new Stopwatch();
+
+            sw.Start();
+
+            Thread.Sleep(3468);
+
+            long ret3 = sw.ElapsedMilliseconds % 3000;
+            long ret4 = sw.ElapsedMilliseconds % 4000;
+            long ret10 = sw.ElapsedMilliseconds % 10000;
+
+            sw.Stop();
+            int i = 1;
+        }
+
+
         [TestMethod]
         public void GetAccessTokenTest()
         {

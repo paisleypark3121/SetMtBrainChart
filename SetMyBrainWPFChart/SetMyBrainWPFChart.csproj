@@ -96,6 +96,8 @@
     <Compile Include="NeuroskyFrequenciesUserControl.xaml.cs">
       <DependentUpon>NeuroskyFrequenciesUserControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Neurosky\ICollector.cs" />
+    <Compile Include="Neurosky\SmartCollector.cs" />
     <Compile Include="Neurosky\Collector.cs" />
     <Compile Include="Neurosky\SMBCHandler.cs" />
     <Compile Include="Neurosky\WPFHandler.cs" />
@@ -274,6 +276,11 @@
     <Resource Include="img\anchor.png" />
     <Resource Include="img\opacity.png" />
     <Resource Include="img\move.png" />
+    <Resource Include="img\faces-scale.jpg" />
+    <Resource Include="img\LEFT.png" />
+    <Resource Include="img\RIGHT.png" />
+    <Resource Include="img\UP.png" />
+    <Resource Include="img\DOWN.png" />
     <Content Include="thinkgear64.lib">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

@@ -5,16 +5,28 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:SetMyBrainWPFChart"
              x:Name="localCUC"
-             mc:Ignorable="d" Height="60" Width="150">
-    <Grid Margin="0,0,0,0">
+             mc:Ignorable="d" Height="75" Width="80">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="2*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
         <Ellipse
-            Width="45"
-            Height="45"
+            Grid.Row="0"
+            Width="40"
+            Height="40"
             Fill="{Binding Color}"
-            HorizontalAlignment="Left"/>
-        <TextBlock 
-            HorizontalAlignment="Right" FontFamily="Century Gothic" FontSize="12" TextWrapping="Wrap" 
+            HorizontalAlignment="Center"
+            VerticalAlignment="Top"/>
+        <!--<TextBlock 
+            Grid.Row="1"
+            HorizontalAlignment="Left" FontFamily="Century Gothic" FontSize="12" TextWrapping="Wrap" 
             Text="{Binding Label}"  
+            VerticalAlignment="Center" />-->
+        <TextBlock 
+            Grid.Row="10"
+            HorizontalAlignment="Center" FontFamily="Century Gothic" FontSize="12" TextWrapping="Wrap" 
+            Text="Connection"  
             VerticalAlignment="Center" />
     </Grid>
 </UserControl>

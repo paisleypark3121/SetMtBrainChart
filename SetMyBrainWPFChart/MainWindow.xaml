@@ -26,7 +26,7 @@
     </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="150"></RowDefinition>
+            <RowDefinition Height="90"></RowDefinition>
             <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="80"></RowDefinition>
@@ -37,50 +37,59 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*"></ColumnDefinition>
             <ColumnDefinition Width="1*"></ColumnDefinition>
-            <ColumnDefinition Width="2*"></ColumnDefinition>
+            <ColumnDefinition Width="1*"></ColumnDefinition>
+            <ColumnDefinition Width="1*"></ColumnDefinition>
             <ColumnDefinition Width="1*"></ColumnDefinition>
             <ColumnDefinition Width="1*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <local:WIndowUserControl 
             x:Name="WUC"
-            Grid.Row="0" Grid.Column="4"  HorizontalAlignment="Right" VerticalAlignment="Top" />
+            Grid.Row="0" Grid.Column="5"  HorizontalAlignment="Right" VerticalAlignment="Top" />
         <local:PlayStopUserControl 
             x:Name="PSUC"
-            Grid.Row="0" Grid.Column="0" Height="80" VerticalAlignment="Center" HorizontalAlignment="Center" />
-        <local:LogoUserControl Grid.Row="0" Grid.Column="2"></local:LogoUserControl>
-        <local:SettingsUserControl Grid.Row="0" Grid.Column="3" VerticalAlignment="Top" Margin="0,20,35,0" Height="34" HorizontalAlignment="Right" Width="92"/>
+            Grid.Row="0" Grid.Column="1" VerticalAlignment="Top" HorizontalAlignment="Center" />
+        <!--<local:LogoUserControl 
+            x:Name="LogoUC"
+            Grid.Row="0" Grid.Column="0"  ></local:LogoUserControl>-->
+        <!--<local:SettingsUserControl Grid.Row="0" Grid.Column="3" VerticalAlignment="Top" Margin="0,20,35,0" Height="34" HorizontalAlignment="Right" Width="92"/>
         <local:ScoreboardUserControl Grid.Row="0" Grid.Column="3" VerticalAlignment="Top" Margin="0,60,35,0" Height="34" HorizontalAlignment="Right" Width="119"/>
-        <local:ShareUserControl Grid.Row="0" Grid.Column="3" VerticalAlignment="Top" Margin="0,100,35,0" Height="34" HorizontalAlignment="Right" Width="75"/>
-        <local:LoginUserControl Grid.Row="0" Grid.Column="4" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,10,10,5" Width="132" Height="64"></local:LoginUserControl>
+        <local:ShareUserControl Grid.Row="0" Grid.Column="3" VerticalAlignment="Top" Margin="0,100,35,0" Height="34" HorizontalAlignment="Right" Width="75"/>-->
+        <local:LoginUserControl 
+            x:Name="LoginUC"
+            Grid.Row="0" Grid.Column="4" VerticalAlignment="Top" HorizontalAlignment="Right" ></local:LoginUserControl>
         <!--<Button Grid.Row="1" Grid.ColumnSpan="5" Click="InjectStopOnClick">
             Inject/Stop Data
         </Button>-->
-        <Separator Grid.Row="1" Grid.ColumnSpan="5" Height="5" />
+        <Separator Grid.Row="1" Grid.ColumnSpan="6" Height="5" />
         <local:ConnectionUserControl 
             x:Name="CUC"
-            Grid.Row="0" Grid.Column="1" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10,0,0,0" />
-        
+            Grid.Row="0" Grid.Column="3" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="5"  />
+
         <local:TimeUserControl 
             x:Name="TUC"
-            Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" VerticalAlignment="Bottom" HorizontalAlignment="Left" />
+            Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="2" VerticalAlignment="Top" HorizontalAlignment="Left" />
         <!--<local:InTheFlowUserControl 
             x:Name="ITFUC" Grid.Row="4" Grid.ColumnSpan="2" Grid.RowSpan="2" 
             />-->
         <local:SetMyBrainChart 
-            Grid.Row="2" Grid.RowSpan="4" Grid.Column="0" Grid.ColumnSpan="5"
+            Grid.Row="2" Grid.RowSpan="5" Grid.Column="0" Grid.ColumnSpan="6"
             x:Name="SMBC" 
             Margin="20,20,20,20" 
             />
+        <!--<local:SmileUserControl 
+            x:Name="SUC" Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="6" VerticalAlignment="Bottom" HorizontalAlignment="Left" MouseDoubleClick="SUC_MouseDoubleClick" />-->
+
         <local:SmileUserControl 
-            x:Name="SUC" Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="5" VerticalAlignment="Bottom" HorizontalAlignment="Left"  />
+            x:Name="SUC" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="6" VerticalAlignment="Top" HorizontalAlignment="Left" MouseDoubleClick="SUC_MouseDoubleClick" />
+
         <!--<local:FacebookUserControl
             Grid.Row="0" Grid.Column="1">            
         </local:FacebookUserControl>-->
-        
+
         <!--<local:TestUserControl 
             Grid.Row="0" Grid.Column="0">            
         </local:TestUserControl>-->
-
+        
     </Grid>
 </Window>
     

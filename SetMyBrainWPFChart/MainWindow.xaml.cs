@@ -38,7 +38,7 @@ namespace SetMyBrainWPFChart
         public bool transparency = false;
 
         Random random = new Random();
-        Collector collector = null;
+        ICollector collector = null;
         CancellationTokenSource tokenSource = null;
         CancellationTokenSource tokenTimeUserControl = null;
 
@@ -54,22 +54,12 @@ namespace SetMyBrainWPFChart
         IHandler handler = null;
         #endregion
 
-        #region limits
+        #region appsettings keys
         private int visibility_limit = 150;
-        #endregion
-
-        #region TAG
         string tag = "SetMyBrain";
-        #endregion
-
-        #region startup
         private string startup = "mock";
-        #endregion
-
-        #region logging
         Dictionary<string,ILog> log = null;
         #endregion
-
 
         public MainWindow()
         {
@@ -80,7 +70,6 @@ namespace SetMyBrainWPFChart
 
             appSettings = new AppSettings.AppSettings();
             connector = new ThinkgearConnector(new string[] { appSettings["COM"] });
-            //connector.Connect();
             visibility_limit = int.Parse(appSettings["visibility_limit"]);
             startup = appSettings["startup"];
             if (string.IsNullOrEmpty(startup))
@@ -113,25 +102,6 @@ namespace SetMyBrainWPFChart
             }
 
             handler = new SMBCHandler(SMBC, CUC, SUC);
-            //handler = new WPFHandler(
-            //    CUC.PoorSignal,
-            //    SMBC.ChartValuesAlpha1,
-            //    SMBC.ChartValuesAlpha2,
-            //    SMBC.ChartValuesBeta1,
-            //    SMBC.ChartValuesBeta2,
-            //    SMBC.ChartValuesGamma1,
-            //    SMBC.ChartValuesGamma2,
-            //    SMBC.ChartValuesDelta,
-            //    SMBC.ChartValuesTheta,
-            //    SMBC.ChartValuesAttention,
-            //    SMBC.ChartValuesCreativity,
-            //    SMBC.ChartValuesImmersion,
-            //    SMBC.ChartValuesArousal,
-            //    SMBC.ChartValuesEngagement,
-            //    SMBC.ChartValuesSlopeTheta,
-            //    SMBC.ChartValuesSlopeBeta,
-            //    SMBC.ChartValuesSlopeAlpha,
-            //    SMBC.ChartValuesSlopePower);
 
             PSUC.PropertyChanged += PSUCChangedEventHandler;
             WUC.PropertyChanged += WUCChangedEventHandler;
@@ -140,15 +110,29 @@ namespace SetMyBrainWPFChart
 
             SMBC.visibility_limit = visibility_limit;
 
-            //tokenSource = new CancellationTokenSource();
-            collector = new Collector(
-                null, 
-                appSettings, 
-                connector, 
-                handler,
-                log
-                //,tokenSource
-                );
+            string _collector = appSettings["collector"];
+            if (_collector == "normal")
+            {
+                collector = new Collector(
+                    null,
+                    appSettings,
+                    connector,
+                    handler,
+                    log
+                    );
+            } 
+            else if (_collector == "smart")
+            {
+                collector = new SmartCollector(
+                    null,
+                    appSettings,
+                    connector,
+                    handler,
+                    log
+                    );
+            }
+            else 
+
 
             IsReading = false;
 
@@ -916,7 +900,7 @@ namespace SetMyBrainWPFChart
         {
             try
             {
-                IHandler handler = new SMBCHandler(SMBC, CUC,SUC);
+                IHandler handler = new SMBCHandler(SMBC, CUC, SUC);
                 
                 
                 while (true)
@@ -1005,11 +989,50 @@ namespace SetMyBrainWPFChart
             if (e.PropertyName == "opacity")
             {
                 if (this.Opacity == 1)
+                    this.Opacity = 0.8;
+                else if (this.Opacity == 0.8)
                     this.Opacity = 0.6;
+                else if (this.Opacity == 0.6)
+                    this.Opacity = 0.4;
+                else if (this.Opacity == 0.4)
+                    this.Opacity = 0.2;
                 else
                     this.Opacity = 1;
             }
         }
 
+        public double current_width = 0;
+        public double current_height = 0;
+
+        private void SUC_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            if (WUC.Visibility == Visibility.Visible)
+            {
+                LoginUC.Visibility = Visibility.Hidden;
+                SMBC.Visibility = Visibility.Hidden;
+                CUC.Visibility = Visibility.Hidden;
+                PSUC.Visibility = Visibility.Hidden;
+                WUC.Visibility = Visibility.Hidden;
+                TUC.Visibility = Visibility.Hidden;
+                WUC.Visibility = Visibility.Hidden;
+                current_width = Width;
+                current_height = Height;
+                Width = 90;
+                Height = 80;
+                
+            } 
+            else
+            {
+                LoginUC.Visibility = Visibility.Visible;
+                SMBC.Visibility = Visibility.Visible;
+                CUC.Visibility = Visibility.Visible;
+                PSUC.Visibility = Visibility.Visible;
+                WUC.Visibility = Visibility.Visible;
+                TUC.Visibility = Visibility.Visible;
+                WUC.Visibility = Visibility.Visible;
+                Width = current_width;
+                Height = current_height;
+            }
+        }
     }
 }

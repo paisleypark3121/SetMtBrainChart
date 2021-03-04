@@ -2,6 +2,7 @@
 using SetMyBrainWPFChart.Log;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -108,6 +109,14 @@ namespace SetMyBrainWPFChart.Neurosky
             };
 
             return dict;
+        }
+
+        public static async Task report(string report_file, string message)
+        {
+            using (StreamWriter sw = new StreamWriter(report_file,true))
+            {
+                await sw.WriteLineAsync(message);
+            }
         }
 
         public static bool AreEqual(Dictionary<string, object> previous, Dictionary<string, object> request)
@@ -355,6 +364,29 @@ namespace SetMyBrainWPFChart.Neurosky
             //If Max_grossIndex_120sec > 0  (1 + Max_grossIndex_120sec) * 1.3
 
 
+        }
+
+        public static void SetIndexes(
+            ref float[] attention,
+            ref float[] creativity,
+            ref float[] engagement,
+            ref float[] arousal,
+            ref float[] immersion,
+            float TG_DATA_ALPHA1,
+            float TG_DATA_ALPHA2,
+            float TG_DATA_BETA1,
+            float TG_DATA_BETA2,
+            float TG_DATA_DELTA,
+            float TG_DATA_GAMMA1,
+            float TG_DATA_GAMMA2,
+            float TG_DATA_THETA,
+            float RelPower)
+        {
+            attention = Utilities.PushElement(attention, Utilities.Attention(TG_DATA_THETA, TG_DATA_ALPHA1, TG_DATA_ALPHA2));
+            creativity = Utilities.PushElement(creativity, Utilities.Creativity(TG_DATA_ALPHA2, RelPower));
+            engagement = Utilities.PushElement(engagement, Utilities.Engagement(TG_DATA_BETA1, TG_DATA_BETA2, TG_DATA_ALPHA1, TG_DATA_ALPHA2, TG_DATA_THETA));
+            arousal = Utilities.PushElement(arousal, Utilities.Arousal(TG_DATA_BETA1, TG_DATA_BETA2, TG_DATA_ALPHA1, TG_DATA_ALPHA2));
+            immersion = Utilities.PushElement(immersion, Utilities.Immersion(TG_DATA_THETA, TG_DATA_ALPHA1, TG_DATA_ALPHA2));
         }
 
         public static void SetSlopes(

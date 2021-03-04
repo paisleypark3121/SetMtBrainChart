@@ -95,5 +95,27 @@ namespace SetMyBrainWPFChart
         {
             Close = true;
         }
+
+        private void UP_Click(object sender, RoutedEventArgs e)
+        {
+            if (Window.GetWindow(this).Height > 440)
+                Window.GetWindow(this).Height -= 40;
+        }
+
+        private void DOWN_Click(object sender, RoutedEventArgs e)
+        {
+            Window.GetWindow(this).Height += 40;
+        }
+
+        private void RIGHT_Click(object sender, RoutedEventArgs e)
+        {
+            Window.GetWindow(this).Width += 40;
+        }
+
+        private void LEFT_Click(object sender, RoutedEventArgs e)
+        {
+            if (Window.GetWindow(this).Width>550)
+                Window.GetWindow(this).Width -= 40;
+        }
     }
 }

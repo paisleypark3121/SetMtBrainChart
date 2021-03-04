@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:SetMyBrainWPFChart"
              mc:Ignorable="d" 
              x:Name="PlayStopUC"
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="60" d:DesignWidth="60">
     <UserControl.Resources>
         <Style x:Key="NoChromeButton" TargetType="{x:Type Button}">
             <Setter Property="Background" Value="Transparent"/>
@@ -34,7 +34,7 @@
     </UserControl.Resources>
     <Grid>
         <Button Style="{DynamicResource NoChromeButton}" Click="Button_Click" >
-            <Image Source="{Binding ImageSource}" />
+            <Image Source="{Binding ImageSource}" Width="60" Height="60" HorizontalAlignment="Center" VerticalAlignment="Center" />
         </Button>
     </Grid>
 </UserControl>

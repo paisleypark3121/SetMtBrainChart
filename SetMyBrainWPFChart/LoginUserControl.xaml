@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:SetMyBrainWPFChart"
-             mc:Ignorable="d" Height="150" Width="220">
+             mc:Ignorable="d" Height="70" Width="60">
     <UserControl.Resources>
         <Style x:Key="NoChromeButton" TargetType="{x:Type Button}">
             <Setter Property="Background" Value="Transparent"/>
@@ -31,11 +31,11 @@
         </Style>
     </UserControl.Resources>
     <Grid>
-        <Button Style="{DynamicResource NoChromeButton}" Click="LoginClick" HorizontalAlignment="Right" Grid.RowSpan="2" >
+        <Button Style="{DynamicResource NoChromeButton}" Click="LoginClick" VerticalAlignment="Top" HorizontalAlignment="Right" Grid.RowSpan="2" >
             <Image Source="/img/login.png"  />
         </Button>
         <TextBlock x:Name="LogInOut" 
-            TextWrapping="Wrap" Text="Login" VerticalAlignment="Center" FontSize="20" FontFamily="Century Gothic" HorizontalAlignment="Left" />
+            TextWrapping="Wrap" Text="Login" VerticalAlignment="Bottom" FontSize="12" FontFamily="Century Gothic" HorizontalAlignment="Center" />
 
     </Grid>
 </UserControl>

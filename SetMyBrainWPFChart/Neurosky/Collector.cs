@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace SetMyBrainWPFChart.Neurosky
 {
-    public class Collector : IDisposable
+    public class Collector : ICollector,IDisposable
     {
         #region variables
         private IAppSettings appSettings = null;
@@ -617,7 +617,7 @@ namespace SetMyBrainWPFChart.Neurosky
                                     grossIndex_creativity_normalized,
                                     grossIndex_immersion_normalized,
                                     grossIndex_arousal_normalized,
-                                    grossIndex_immersion_normalized
+                                    grossIndex_engagement_normalized
                                 )
                             );
                             #endregion

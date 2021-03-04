@@ -80,7 +80,7 @@ namespace SetMyBrainWPFChart
             //Label = "Connected";
 
             Color = "#FF0000";
-            Label = "Not Connected";
+            Label = "KO";
 
             this.PropertyChanged += ColorAndLabelChange;
 
@@ -93,22 +93,22 @@ namespace SetMyBrainWPFChart
             {
                 if (_poorSignal == 200)
                 {
-                    Label = "NO CONNECTION";
+                    Label = "KO";
                     Color = "#FF0000";
                 }
                 else if (_poorSignal < 30)
                 {
-                    Label = "Connected";
+                    Label = "OK";
                     Color = "#32CD32";
                 }
                 else if (_poorSignal < 120)
                 {
-                    Label = "Poor Connection";
+                    Label = "Poor";
                     Color = "#FFFF00";
                 }
                 else if (_poorSignal < 160)
                 {
-                    Label = "Very Poor Connection";
+                    Label = "Very Poor";
                     Color = "#FFFF00";
                 }
                 else

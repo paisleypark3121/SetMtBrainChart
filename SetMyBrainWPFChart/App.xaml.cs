@@ -15,7 +15,6 @@ namespace SetMyBrainWPFChart
     {
         public App()
         {
-            //string a = "Hello World";
             
         }
 
