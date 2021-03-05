@@ -42,7 +42,7 @@
             <ColumnDefinition Width="1*"></ColumnDefinition>
             <ColumnDefinition Width="1*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
-        <Button Style="{DynamicResource NoChromeButton}" Grid.Row="1" Grid.Column="1" Click="UP_Click" >
+        <!--<Button Style="{DynamicResource NoChromeButton}" Grid.Row="1" Grid.Column="1" Click="UP_Click" >
             <Image Source="/img/UP.png" />
         </Button>
         <Button Style="{DynamicResource NoChromeButton}" Grid.Row="1" Grid.Column="2" Click="DOWN_Click" >
@@ -53,7 +53,7 @@
         </Button>
         <Button Style="{DynamicResource NoChromeButton}" Grid.Row="1" Grid.Column="4" Click="RIGHT_Click" >
             <Image Source="/img/RIGHT.png" />
-        </Button>
+        </Button>-->
         <Button Style="{DynamicResource NoChromeButton}" Grid.Row="0" Grid.Column="0" Click="Move_Click" >
             <Image Source="/img/move.png" />
         </Button>

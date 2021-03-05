@@ -1109,6 +1109,11 @@ namespace SetMyBrainWPFChart
             {
                 opacity();
             }
+
+            if (e.Key ==Key.A)
+            {
+                this.Topmost = !this.Topmost;
+            }
         }
     }
 }
