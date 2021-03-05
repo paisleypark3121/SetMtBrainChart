@@ -120,7 +120,7 @@ namespace SetMyBrainWPFChart
                     handler,
                     log
                     );
-            } 
+            }
             else if (_collector == "smart")
             {
                 collector = new SmartCollector(
@@ -131,12 +131,33 @@ namespace SetMyBrainWPFChart
                     log
                     );
             }
-            else 
+            else
+                throw new Exception("Error in starting application");
 
+            bool _visibilityChart = false;
+            SMBC.Alpha1SeriesVisibility= (bool.TryParse(appSettings["Alpha1"].ToString(), out _visibilityChart) == true) ? _visibilityChart : true;
+            SMBC.Alpha2SeriesVisibility = (bool.TryParse(appSettings["Alpha2"].ToString(), out _visibilityChart) == true) ? _visibilityChart : true;
+            SMBC.Beta1SeriesVisibility = (bool.TryParse(appSettings["Beta1"].ToString(), out _visibilityChart) == true) ? _visibilityChart : true;
+            SMBC.Beta2SeriesVisibility = (bool.TryParse(appSettings["Beta2"].ToString(), out _visibilityChart) == true) ? _visibilityChart : true;
+            SMBC.Gamma1SeriesVisibility = (bool.TryParse(appSettings["Gamma1"].ToString(), out _visibilityChart) == true) ? _visibilityChart : true;
+            SMBC.Gamma2SeriesVisibility = (bool.TryParse(appSettings["Gamma2"].ToString(), out _visibilityChart) == true) ? _visibilityChart : true;
+            SMBC.DeltaSeriesVisibility = (bool.TryParse(appSettings["Delta"].ToString(), out _visibilityChart) == true) ? _visibilityChart : true;
+            SMBC.ThetaSeriesVisibility = (bool.TryParse(appSettings["Theta"].ToString(), out _visibilityChart) == true) ? _visibilityChart : true;
+            SMBC.AttentionSeriesVisibility = (bool.TryParse(appSettings["Attention"].ToString(), out _visibilityChart) == true) ? _visibilityChart : true;
+            SMBC.CreativitySeriesVisibility = (bool.TryParse(appSettings["Creativity"].ToString(), out _visibilityChart) == true) ? _visibilityChart : true;
+            SMBC.EngagementSeriesVisibility = (bool.TryParse(appSettings["Engagement"].ToString(), out _visibilityChart) == true) ? _visibilityChart : true;
+            SMBC.ArousalSeriesVisibility = (bool.TryParse(appSettings["Arousal"].ToString(), out _visibilityChart) == true) ? _visibilityChart : true;
+            SMBC.ImmersionSeriesVisibility = (bool.TryParse(appSettings["Immersion"].ToString(), out _visibilityChart) == true) ? _visibilityChart : true;
+            SMBC.SlopeAlphaSeriesVisibility = (bool.TryParse(appSettings["SlopeAlpha"].ToString(), out _visibilityChart) == true) ? _visibilityChart : true;
+            SMBC.SlopeBetaSeriesVisibility = (bool.TryParse(appSettings["SlopeBeta"].ToString(), out _visibilityChart) == true) ? _visibilityChart : true;
+            SMBC.SlopeThetaSeriesVisibility = (bool.TryParse(appSettings["SlopeTheta"].ToString(), out _visibilityChart) == true) ? _visibilityChart : true;
+            SMBC.SlopePowerSeriesVisibility = (bool.TryParse(appSettings["SlopePower"].ToString(), out _visibilityChart) == true) ? _visibilityChart : true;
 
             IsReading = false;
 
             Task.Run(() => this.TimeTask());
+
+            this.KeyDown += new KeyEventHandler(MainWindow_KeyDown);
         }
 
         public bool IsReading { get; set; }
@@ -953,22 +974,7 @@ namespace SetMyBrainWPFChart
         {
             if (e.PropertyName == "move")
             {
-                if ((this.Top == 0) && (this.Left == 0))
-                {
-                    this.Left = SystemParameters.PrimaryScreenWidth - this.Width;
-                } 
-                else if ((this.Top == 0) && (this.Left == SystemParameters.PrimaryScreenWidth - this.Width))
-                {
-                    this.Top = SystemParameters.PrimaryScreenHeight - this.Height;
-                }
-                else if ((this.Top == SystemParameters.PrimaryScreenHeight - this.Height) && (this.Left == SystemParameters.PrimaryScreenWidth - this.Width))
-                {
-                    this.Left = 0;
-                }
-                else if ((this.Top == SystemParameters.PrimaryScreenHeight - this.Height) && (this.Left == 0))
-                {
-                    this.Top = 0;
-                }
+                move();
             }
 
             if (e.PropertyName == "minimize")
@@ -988,23 +994,14 @@ namespace SetMyBrainWPFChart
 
             if (e.PropertyName == "opacity")
             {
-                if (this.Opacity == 1)
-                    this.Opacity = 0.8;
-                else if (this.Opacity == 0.8)
-                    this.Opacity = 0.6;
-                else if (this.Opacity == 0.6)
-                    this.Opacity = 0.4;
-                else if (this.Opacity == 0.4)
-                    this.Opacity = 0.2;
-                else
-                    this.Opacity = 1;
+                opacity();
             }
         }
 
         public double current_width = 0;
         public double current_height = 0;
 
-        private void SUC_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        private void minimize()
         {
             if (WUC.Visibility == Visibility.Visible)
             {
@@ -1019,8 +1016,8 @@ namespace SetMyBrainWPFChart
                 current_height = Height;
                 Width = 90;
                 Height = 80;
-                
-            } 
+
+            }
             else
             {
                 LoginUC.Visibility = Visibility.Visible;
@@ -1032,6 +1029,85 @@ namespace SetMyBrainWPFChart
                 WUC.Visibility = Visibility.Visible;
                 Width = current_width;
                 Height = current_height;
+            }
+        }
+
+        private void move()
+        {
+            if ((this.Top == 0) && (this.Left == 0))
+            {
+                this.Left = SystemParameters.PrimaryScreenWidth - this.Width;
+            }
+            else if ((this.Top == 0) && (this.Left == SystemParameters.PrimaryScreenWidth - this.Width))
+            {
+                this.Top = SystemParameters.PrimaryScreenHeight - this.Height;
+            }
+            else if ((this.Top == SystemParameters.PrimaryScreenHeight - this.Height) && (this.Left == SystemParameters.PrimaryScreenWidth - this.Width))
+            {
+                this.Left = 0;
+            }
+            else if ((this.Top == SystemParameters.PrimaryScreenHeight - this.Height) && (this.Left == 0))
+            {
+                this.Top = 0;
+            }
+        }
+
+        private void opacity()
+        {
+            if (this.Opacity == 1)
+                this.Opacity = 0.8;
+            else if (this.Opacity == 0.8)
+                this.Opacity = 0.6;
+            else if (this.Opacity == 0.6)
+                this.Opacity = 0.4;
+            else if (this.Opacity == 0.4)
+                this.Opacity = 0.2;
+            else
+                this.Opacity = 1;
+        }
+
+        private void SUC_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            minimize();
+        }
+
+        void MainWindow_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Left)
+            {
+                if (Width > 550)
+                    Width -= 40;
+            }
+
+            if (e.Key == Key.Right)
+            {
+                Width += 40;
+            }
+
+            if (e.Key == Key.Up)
+            {
+                if (Height > 440)
+                    Height -= 40;
+            }
+
+            if (e.Key == Key.Down)
+            {
+                Height += 40;
+            }
+
+            if ((e.Key == Key.LeftCtrl) || (e.Key == Key.LeftCtrl))
+            {
+                minimize();
+            }
+
+            if (e.Key == Key.Tab)
+            {
+                move();
+            }
+
+            if (e.Key == Key.O)
+            {
+                opacity();
             }
         }
     }
